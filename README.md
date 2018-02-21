@@ -3,11 +3,13 @@
 * [A program használata](#a-program-használata)
 
 # Motiváció
+
 A csecsemők, gyermekek fejlődésének követését lehetővé tevő standard növekedési görbék sok-sok évtizede használatban vannak. Valószínűleg a legtöbb szülő látott már ilyet; klasszikus formájában egy papír, rajta az előrenyomtatott percentilis-görbékkel, a szülő bejelöli az egyes méréseket, esetleg szépen össze is köti őket, és így meg tudja ítélni a gyermek fejlődősét.
 
 A program kifejlesztésének ötletét az adta, hogy 2018-ban kissé furcsán hatnak a nyomtatott papíron tollal berajzolgatott és vonalzóval összekötögetett növekedési görbék; minden bizonnyal sok szülő eleve nem (csak) egy papírfecnire írkálja a számokat, hanem számítógépen (is) rögzíti őket. De ha már így van, és ezek az adatok is megvannak elektronikusan - csakúgy mint a referencia-görbék - akkor miért ne gyártsunk belőle szép, számítógéppel rajzolt növekedési görbét?
 
 # Kitérő: én mégsem láttam még ilyet, mi az, hogy növekedési görbe meg percentilis és társaik?
+
 A növekedési görbe egész egyszerűen a gyermek valamely antropometriai adata - leggyakrabban a testmagassága és testtömege - az életkorának függvényében ábrázolva.
 
 Ez persze önmagában még nem túl informatív: ha egy 23 hónapos fiú 91 cm, az most sok? Vagy kevés? Vagy átlagos? Ezt nehéz ránézésre megmondani, gyakorlott szülőknek esetleg lehet benyomásuk, de azért jó lenne a dolgot tudományos alapokra helyezni. A megoldás ugyanis nagyon egyszerű: viszonyítani kell valamihez! Célszerűen az azonos nemű és azonos életkorú - és egészséges - többi gyermekhez. Ha ugyanis elég sokat lemérünk, akkor meg tudjuk határozni, hogy az egészséges 23 hónapos fiúk testmagasságának milyen az eloszlása, majd a 91 cm-t ehhez tudjuk viszonyítani. (Csak eloszlásban érdemes gondolkozni, hiszen a testmagasság szóródik: még a tökéletesen egészségesek között is lesznek alacsonyabbak és magasabbak.)
@@ -38,4 +40,22 @@ Fontos hangsúlyozni, hogy ezek az értékek semmit nem mondanak arról, hogy eg
 
 A program - a gyerek nemén túl - egy táblázatot kér be, mely a gyerek növekedési adatait tartalmazza, majd ez alapján kiszámolja belőlük a percentilis értékeket, és azokat a WHO referencia növekedési görbéjén ábrázolja. Az ábrázolás módja testreszabható, és a kapott eredmény képfájlként le is tölthető.
 
-A növekedési adatokat tartalmazó fájl a Tallózás gombra kattintva válaszható ki; formátuma lehet `.xls` vagy `.xlsx` (Microsoft Excel), illetve az univerzális `.csv` formátum. (A formátumot nem kell megadni, a program a kiterjesztés alapján automatikusan felismeri.) A fájl tartalmát két szempontból kell
+A növekedési adatokat tartalmazó fájl a Tallózás gombra kattintva válaszható ki; formátuma lehet `.xls` vagy `.xlsx` (Microsoft Excel), illetve az univerzális `.csv` formátum. (A formátumot nem kell megadni, a program a kiterjesztés alapján automatikusan felismeri.)
+
+Két szempont van a fájl tartalma kapcsán, amit a program számára a felhasználónak kell megadnia.
+
+## Fejléc megléte
+
+A program elfogad olyan fájlt, amiben nincs fejléc, tehát az első sorban rögtön a mérési adatok kezdődnek:
+
+És olyat is, amiben az első sor fejléc:
+
+(A fejléc konkrét tartalma érdektelen, ez a választási lehetőség egyszerűen annyit szabályoz, hogy az első sort figyelmen kívül hagyja-e a program.)
+
+## Az életkor megadásának formátuma
+
+Az életkor megadása kétféleképp is lehetséges.
+
+# Technikai megjegyzések
+
+A
