@@ -2,6 +2,7 @@
 * [Kitérő: én mégsem láttam még ilyet, mi az, hogy növekedési görbe meg percentilis és társaik?](#kitérő-én-mégsem-láttam-még-ilyet-mi-az-hogy-növekedési-görbe-meg-percentilis-és-társaik)
 * [A program használata](#a-program-használata)
 * [Technikai megjegyzések](#technikai-megjegyzések)
+* [Verziótörténet](#verziótörténet)
 
 # Motiváció
 
@@ -73,4 +74,10 @@ Példaként letölthető egy demonstrációs állomány [életkort tartalmazó](
 
 # Technikai megjegyzések
 
-A
+* Noha igyekeztem a lehető legalaposabban eljárni, a programhoz természetesen nincs garancia. Különösen most, hogy még a kezdeti fázisban van; pontosan erre tekintettel viszont hálásan megköszönök minden tesztelést, illetve visszajelzést!
+* Az előbbi cél érdekében a teljes munkám transzparens: ebben a GitHub repozitóriumban nyilvánosan elérhető tettem a teljes programot, mely alapján bárki reprodukálhatja az egész munkafolyamatot. Letölthető az [R szkript](app.R), az [adatállomány](lmsdat.rds) és a percentiliseket számító [segédszkript](lms3_macro_calcz_woload.R) is.
+* A program a WHO referencia növekedési görbéit használja ([de Onis, 2007](https://scielosp.org/scielo.php?script=sci_arttext&pid=S0042-96862007000900010&lng=en&nrm=iso&tlng=en)), Rodd és mtsai kiegészítésével ([Rodd, 2014](https://bmcpediatr.biomedcentral.com/articles/10.1186/1471-2431-14-32)). A
+
+# Verziótörténet
+
+* v1.00: 2018-02-22.
