@@ -1,6 +1,7 @@
 * [Motiváció](#motiváció)
 * [Kitérő: én mégsem láttam még ilyet, mi az, hogy növekedési görbe meg percentilis és társaik?](#kitérő-én-mégsem-láttam-még-ilyet-mi-az-hogy-növekedési-görbe-meg-percentilis-és-társaik)
 * [A program használata](#a-program-használata)
+* [Technikai megjegyzések](#technikai-megjegyzések)
 
 # Motiváció
 
@@ -42,19 +43,13 @@ A program - a gyerek nemén túl - egy táblázatot kér be, mely a gyerek növe
 
 A növekedési adatokat tartalmazó fájl a Tallózás gombra kattintva válaszható ki; formátuma lehet `.xls` vagy `.xlsx` (Microsoft Excel), illetve az univerzális `.csv` formátum. (A formátumot nem kell megadni, a program a kiterjesztés alapján automatikusan felismeri.)
 
-Két szempont van a fájl tartalma kapcsán, amit a program számára a felhasználónak kell megadnia.
+Fontos, hogy a fájl beolvasása a 2. sortól kezdődik, az 1. sorban tehát nem szerepelhet mérés, mert a program azt a sort eldobja. (Feltételezi, hogy ott egy fejléc szerepel.)
 
-## Fejléc megléte
+Az életkor megadása kétféleképp is lehetséges. Az egyik megoldás, ha magában a fájlban szerepelnek a mérések időpontjai, ez esetben az első oszlop az időpontot tartalmazza (csak mint szám, mértékegység nélkül), a második oszlop pedig a mértékegységet, mely a "hét", "hónap" vagy "év" kifejezések valamelyike kell legyen (idézőjelek nélkül):
 
-A program elfogad olyan fájlt, amiben nincs fejléc, tehát az első sorban rögtön a mérési adatok kezdődnek:
-
-És olyat is, amiben az első sor fejléc:
-
-(A fejléc konkrét tartalma érdektelen, ez a választási lehetőség egyszerűen annyit szabályoz, hogy az első sort figyelmen kívül hagyja-e a program.)
-
-## Az életkor megadásának formátuma
-
-Az életkor megadása kétféleképp is lehetséges.
+<p align="center">
+  <img src="https://github.com/tamas-ferenci/NovekedesiGorbeRajzolo/blob/master/FormatumEletkorPelda.png" alt="Példa a fájl formátumára, ha az életkor van megadva"/>
+</p>
 
 # Technikai megjegyzések
 
