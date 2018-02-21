@@ -69,7 +69,7 @@ Ezt az - egy vagy két - oszlopot követő oszlopokban kell megadni előbb a tes
 
 Mint látható, a különböző mértékegységek itt is vegyíthetőek, a program mindent automatikusan átvált.
 
-Példaként letölthető egy demonstrációs állomány [életkort tartalmazó](PeldaEletkor.xlsx?raw=true) formátumban, és egy [mérési dátumokat tartalmazó](https://github.com/tamas-ferenci/NovekedesiGorbeRajzolo/blob/master/PeldaDatum.xlsx) formátumban.
+Példaként letölthető egy demonstrációs állomány [életkort tartalmazó](PeldaEletkor.xlsx?raw=true) formátumban, és egy [mérési dátumokat tartalmazó](PeldaDatum.xlsx?raw=true) formátumban.
 
 # Technikai megjegyzések
 
