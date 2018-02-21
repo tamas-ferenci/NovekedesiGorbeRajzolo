@@ -36,6 +36,6 @@ Fontos hangsúlyozni, hogy ezek az értékek semmit nem mondanak arról, hogy eg
 
 # A program használata
 
-A program egy táblázatot kér be, mely a gyerek növekedési adatait tartalmazza. Ez alapján kiszámolja belőlük a percentilis értékeket, és azokat a WHO növekedési görbéjén ábrázolja. Az ábrázolás módja testreszabható, és a kapott eredmény képfájlként le is tölthető.
+A program - a gyerek nemén túl - egy táblázatot kér be, mely a gyerek növekedési adatait tartalmazza, majd ez alapján kiszámolja belőlük a percentilis értékeket, és azokat a WHO referencia növekedési görbéjén ábrázolja. Az ábrázolás módja testreszabható, és a kapott eredmény képfájlként le is tölthető.
 
-A fájl
+A növekedési adatokat tartalmazó fájl a Tallózás gombra kattintva válaszható ki; formátuma lehet `.xls` vagy `.xlsx` (Microsoft Excel), illetve az univerzális `.csv` formátum. (A formátumot nem kell megadni, a program a kiterjesztés alapján automatikusan felismeri.) A fájl tartalmát két szempontból kell
