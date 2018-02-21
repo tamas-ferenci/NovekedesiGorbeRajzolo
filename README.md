@@ -17,14 +17,18 @@ Az eloszlások alakjának egyik lehetséges leírása a percentilisek megadása.
 Az tehát, hogy mennyi a testmagasság - például - 50. percentilise, adott életkorban egy szám. Ha most ezt különböző életkorokban kiszámoljuk, és egy grafikonon ábrázoljuk, vízszintes tengelyen feltüntetve az életkort, függőlegesen pedig azt, hogy az adott életkorban hány centiméter az 50. percentilis (tehát az adott életkorban mekkora az a testmagasság, melynél épp a gyerekek fele alacsonyabb), akkor kapjuk a referencia növekedési görbét:
 
 <p align="center">
-  <img src="https://github.com/tamas-ferenci/NovekedesiGorbeRajzolo/blob/master/NovekedesigorbeIllusztracio.png" alt="Percentilis illusztráció"/>
+  <img src="https://github.com/tamas-ferenci/NovekedesiGorbeRajzolo/blob/master/NovekedesigorbeIllusztracio.png" alt="Növekedési görbe illusztráció"/>
 </p>
 
-Ha pedig ezt több nevezetes percentilisre kirajzoljuk, akkor el is jutunk 
+Ha pedig ezt több nevezetes percentilisre kirajzoljuk, akkor el is jutunk a növekedési görbék megszokott formátumához; íme a WHO-é:
+
+<p align="center">
+  <img src="https://www.lll.hu/files/01_testhossz_eletkoronkent_fiuk.jpg" alt="Növekedési görbe"/>
+</p>
 
 Erre a grafikonra, mint háttérre, rárajzolhatóak egy gyermek konkrét adatai (adott életkorban milyen magas volt), és így megítélhetővé válik a növekedése.
 
-Fontos hangsúlyozni, hogy ezek az értékek semmit nem mondanak arról, hogy egy adott testmagasság "normális"-e. Az 1. percentilis például elég extrém - de (definíció szerint!) épp azt jelenti, hogy a tökéletesen egészséges gyerekek közül is minden századik van ilyen alacsony!
+Fontos hangsúlyozni, hogy ezek az értékek semmit nem mondanak arról, hogy egy adott testmagasság "normális"-e. Az 1. percentilis például elég extrém - de (definíció szerint!) épp azt jelenti, hogy a tökéletesen egészséges gyerekek közül is minden századik van ilyen alacsony.
 
 # A program használata
 
