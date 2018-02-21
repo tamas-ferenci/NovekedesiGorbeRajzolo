@@ -69,8 +69,7 @@ Ezt az - egy vagy két - oszlopot követő oszlopokban kell megadni előbb a tes
 
 Mint látható, a különböző mértékegységek itt is vegyíthetőek, a program mindent automatikusan átvált.
 
-Példa fájl
-
+Példaként letölthető egy demonstrációs állomány életkort tartalmazó formátumban, és egy mérési dátumokat tartalmazó formátumban.
 
 # Technikai megjegyzések
 
