@@ -8,11 +8,13 @@ A növekedési görbe egész egyszerűen a gyermek valamely antropometriai adata
 
 Ez persze önmagában még nem túl informatív: ha egy 23 hónapos fiú 91 cm, az most sok? Vagy kevés? Vagy átlagos? Ezt nehéz ránézésre megmondani, gyakorlott szülőknek esetleg lehet benyomásuk, de azért jó lenne a dolgot tudományos alapokra helyezni. A megoldás ugyanis nagyon egyszerű: viszonyítani kell valamihez! Célszerűen az azonos nemű és azonos életkorú - és egészséges - többi gyermekhez. Ha ugyanis elég sokat lemérünk, akkor meg tudjuk határozni, hogy az egészséges 23 hónapos fiúk testmagasságának milyen az eloszlása, majd a 91 cm-t ehhez tudjuk viszonyítani. (Csak eloszlásban érdemes gondolkozni, hiszen a testmagasság szóródik: még a tökéletesen egészségesek között is lesznek alacsonyabbak és magasabbak.)
 
-Az eloszlások alakjának egyik lehetséges leírása a percentilisek megadása. A percentilis nem más, mint egyfajta osztópont: 32. percentilis az a testmagasság, melyre igaz, hogy a gyermekek 32%-a kisebb testmagasságú ennél (és így 68%-a nagyobb). Hasonlóan a 10. percentilis az az - alacsony - testmagasság, melynél mindössze a gyermekek 10%-a alacsonyabb, a 95. percentilis az a - magas - testmagasság, aminél mindössze a gyermekek 5%-a magassabb és így tovább. Az 50. percentilis a "felezőpont" (az a testmagasság, aminél a gyerekek fele alacsonyabb, fele magasabb), ezt szokás mediánnak nevezni. Grafikusan szemléltetve mindezt, íme az egészséges 23 hónapos fiúk testmagasságának eloszlása:
+Az eloszlások alakjának egyik lehetséges leírása a percentilisek megadása. A percentilis nem más, mint egyfajta osztópont: 32. percentilis az a testmagasság, melyre igaz, hogy a gyermekek 32%-a kisebb testmagasságú ennél (és így 68%-a nagyobb). Hasonlóan a 10. percentilis az az - alacsony - testmagasság, melynél mindössze a gyermekek 10%-a alacsonyabb, a 95. percentilis az a - magas - testmagasság, aminél mindössze a gyermekek 5%-a magassabb és így tovább. Az 50. percentilis a "felezőpont" (az a testmagasság, aminél a gyerekek fele alacsonyabb, fele magasabb), ezt szokás mediánnak nevezni. Grafikusan szemléltetve mindezt, íme az egészséges 23 hónapos fiúk testmagasságának eloszlása, rajta az előbb említett percentilisekkel:
 
-A görbén az 
+<p align="center">
+  <img src="https://github.com/tamas-ferenci/NovekedesiGorbeRajzolo/blob/master/PercentilisIllusztracio.png" alt="Percentilis illusztráció"/>
+</p>
 
-Az tehát, hogy mennyi a testtömegek például 50. percentilise, adott életkorban egy szám. Ha most ezt különböző életkorokban kiszámoljuk, és egy grafikonon ábrázoljuk, vízszintes
+Az tehát, hogy mennyi a testmagasságok - például - 50. percentilise, adott életkorban egy szám. Ha most ezt különböző életkorokban kiszámoljuk, és egy grafikonon ábrázoljuk, vízszintes
 
 Fontos hangsúlyozni, hogy ezek az értékek semmit nem mondanak arról, hogy egy adott testmagasság "normális"-e. Az 1. percentilis például elég extrém - de (definíció szerint!) épp azt jelenti, hogy a tökéletesen egészséges gyerekek közül is minden századik van ilyen alacsony!
 
