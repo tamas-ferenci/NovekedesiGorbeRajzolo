@@ -26,10 +26,12 @@ Ha pedig ezt több nevezetes percentilisre kirajzoljuk, akkor el is jutunk a nö
   <img src="https://www.lll.hu/files/01_testhossz_eletkoronkent_fiuk.jpg" alt="Növekedési görbe"/>
 </p>
 
-Erre a grafikonra, mint háttérre, rárajzolhatóak egy gyermek konkrét adatai (adott életkorban milyen magas volt), és így megítélhetővé válik a növekedése.
+Erre a grafikonra, mint háttérre, rárajzolhatóak egy gyermek konkrét adatai (adott életkorban milyen magas volt), és így, a percentilis-görbék révén az egészséges gyerekek eloszlásához viszonyítva, megítélhetővé válik a növekedése.
 
 Fontos hangsúlyozni, hogy ezek az értékek semmit nem mondanak arról, hogy egy adott testmagasság "normális"-e. Az 1. percentilis például elég extrém - de (definíció szerint!) épp azt jelenti, hogy a tökéletesen egészséges gyerekek közül is minden századik van ilyen alacsony.
 
 # A program használata
 
-A program egy 
+A program egy táblázatot kér be, mely a gyerek növekedési adatait tartalmazza. Ez alapján kiszámolja belőlük a percentilis értékeket, és azokat a WHO növekedési görbéjén ábrázolja. Az ábrázolás módja testreszabható, és a kapott eredmény képfájlként le is tölthető.
+
+A fájl
