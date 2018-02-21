@@ -43,13 +43,34 @@ A program - a gyerek nemén túl - egy táblázatot kér be, mely a gyerek növe
 
 A növekedési adatokat tartalmazó fájl a Tallózás gombra kattintva válaszható ki; formátuma lehet `.xls` vagy `.xlsx` (Microsoft Excel), illetve az univerzális `.csv` formátum. (A formátumot nem kell megadni, a program a kiterjesztés alapján automatikusan felismeri.)
 
-Fontos, hogy a fájl beolvasása a 2. sortól kezdődik, az 1. sorban tehát nem szerepelhet mérés, mert a program azt a sort eldobja. (Feltételezi, hogy ott egy fejléc szerepel.)
+Fontos, hogy a fájl beolvasása a 2. sortól kezdődik, az 1. sorban tehát nem szerepelhet mérés, mert a program azt a sort eldobja. (Feltételezi, hogy ott egy fejléc szerepel. Mivel ezt be sem olvassa, így a konkrét tartalma érdektelen.)
 
 Az életkor megadása kétféleképp is lehetséges. Az egyik megoldás, ha magában a fájlban szerepelnek a mérések időpontjai, ez esetben az első oszlop az időpontot tartalmazza (csak mint szám, mértékegység nélkül), a második oszlop pedig a mértékegységet, mely a "hét", "hónap" vagy "év" kifejezések valamelyike kell legyen (idézőjelek nélkül):
 
 <p align="center">
   <img src="https://github.com/tamas-ferenci/NovekedesiGorbeRajzolo/blob/master/FormatumEletkorPelda.png" alt="Példa a fájl formátumára, ha az életkor van megadva"/>
 </p>
+
+(Amint látható, a különböző mértékegységek vegyesen is használhatóak, a program automatikusan átszámolja őket.)
+
+A másik lehetőség, hogy a fájlban csak a mérések dátumai szerepelnek:
+
+<p align="center">
+  <img src="https://github.com/tamas-ferenci/NovekedesiGorbeRajzolo/blob/master/FormatumDatumPelda.png" alt="Példa a fájl formátumára, ha a mérés dátuma van megadva"/>
+</p>
+
+Ez esetben természetesen a gyermek születési dátumát is meg kell adni (ezt a lehetőséget választva a formátumnál automatikusan meg is jelenik a dátum megadására szolgáló mező).
+
+Ezt az - egy vagy két - oszlopot követő oszlopokban kell megadni előbb a testmagasság méréseit, aztán a testtömegét. Mindkét esetben előbb a mérés számértéke szerepeljen, majd a következő oszlopban a mértékegysége (az előbbinél ez "cm" vagy "m", az utóbbinál "g" vagy "kg" lehet, természetesen idézőjelek nélkül):
+
+<p align="center">
+  <img src="https://github.com/tamas-ferenci/NovekedesiGorbeRajzolo/blob/master/MeresekPelda.png" alt="Példa a fájl formátumára, ha a mérés dátuma van megadva"/>
+</p>
+
+Mint látható, a különböző mértékegységek itt is vegyíthetőek, a program mindent automatikusan átvált.
+
+Példa fájl
+
 
 # Technikai megjegyzések
 
