@@ -72,12 +72,17 @@ Mint látható, a különböző mértékegységek itt is vegyíthetőek, a progr
 
 Példaként letölthető egy demonstrációs állomány [életkort tartalmazó](PeldaEletkor.xlsx?raw=true) formátumban, és egy [mérési dátumokat tartalmazó](PeldaDatum.xlsx?raw=true) formátumban.
 
+Végezetül fontos ismét hangsúlyozni, hogy a program pusztán a növekedési görbe ábrázolását segíti, nem helyettesíti annak kiértékelését, azt minden esetben egészségügyi szakszemélyzetre kell bízni. Különösen fontos, hogy a "magas" és "alacsony" értékek egyáltalán nem feltétlenül jelentenek bajt (ha már nagyon muszáj valamit mondani, akkor is inkább a változás az érdekes, tehát ha magasból egyszercsak alacsony lesz, vagy fordítva). Szó nincs tehát arról, hogy az 50. percentilis a "jó" értékét, amit meg kell próbálni elérni, mint egy teszten a maximum pontot. A görbe - mint minden diagnosztikai eszköz - egyébként is csak a klinikai kép egészével együtt értékelhető.
+
 # Technikai megjegyzések
 
 * Noha igyekeztem a lehető legalaposabban eljárni, a programhoz természetesen nincs garancia. Különösen most, hogy még a kezdeti fázisban van; pontosan erre tekintettel viszont hálásan megköszönök minden tesztelést, illetve visszajelzést!
-* Az előbbi cél érdekében a teljes munkám transzparens: ebben a GitHub repozitóriumban nyilvánosan elérhető tettem a teljes programot, mely alapján bárki reprodukálhatja az egész munkafolyamatot. Letölthető az [R szkript](app.R?raw=true), az [adatállomány](lmsdat.rds?raw=true) és a percentiliseket számító [segédszkript](lms3_macro_calcz_woload.R?raw=true) is.
-* A program a WHO referencia növekedési görbéit használja ([de Onis, 2007](https://scielosp.org/scielo.php?script=sci_arttext&pid=S0042-96862007000900010&lng=en&nrm=iso&tlng=en)), Rodd és mtsai kiegészítésével ([Rodd, 2014](https://bmcpediatr.biomedcentral.com/articles/10.1186/1471-2431-14-32)). A
+* Az előbbi cél érdekében a teljes munkám transzparens: ebben a GitHub repozitóriumban nyilvánosan elérhető tettem a teljes programot, mely alapján bárki reprodukálhatja az egész munkafolyamatot. Letölthető az [R szkript](app.R), az [adatállomány](lmsdat.rds?raw=true) és a percentiliseket számító [segédszkript](lms3_macro_calcz_woload.R) is.
+* A program a WHO referencia növekedési görbéit használja (<a href="https://scielosp.org/scielo.php?script=sci_arttext&pid=S0042-96862007000900010&lng=en&nrm=iso&tlng=en" target="_blank">de Onis, 2007</a>), Rodd és mtsai kiegészítésével (<a href="https://bmcpediatr.biomedcentral.com/articles/10.1186/1471-2431-14-32" target="_blank">Rodd, 2014</a>). A percentilis és _z_-score számításokat a Kanadai Gyermekendokrinológiai Munkacsoport (CPEG) `quickZ` [szkriptjével](https://cpeg-gcep.net/content/who-macro-files-cpeg-revision) végzi. Az adatfájlokat csak minimális mértékben módosítottam, hogy kompatibilis legyen a program hívásaival.
+* Létezik ugyan specifikusan magyar növekedési referencia is (az [Országos Longitudinális Gyermeknövekedés-vizsgálat](http://www.demografia.hu/kiadvanyokonline/index.php/kutatasijelentesek/article/view/394)), mely nagyon igényesen tervezett mintavételileg és nagy energiabefektetéssel készült, ám komoly módszertani aggályok [merültek fel](https://www.lll.hu/who_novekedesi_gorbek-milyen_a_szoptatott_csecsemok_atlagos_novekedesi_uteme) a bevont gyerekek táplálásával kapcsolatban, ezért használtam inkább a WHO referenciát.
 
 # Verziótörténet
 
-* v1.00: 2018-02-22.
+Verzió|Dátum
+------|-----
+v1.00 | 2018-02-22
