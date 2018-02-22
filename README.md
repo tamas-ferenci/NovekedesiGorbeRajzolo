@@ -4,6 +4,8 @@
 * [Technikai megjegyzések](#technikai-megjegyzések)
 * [Verziótörténet](#verziótörténet)
 
+A program címe: http://research.physcon.uni-obuda.hu/NovekedesiGorbeRajzolo/.
+
 # Motiváció
 
 A csecsemők, gyermekek fejlődésének követését lehetővé tevő standard növekedési görbék sok-sok évtizede használatban vannak. Valószínűleg a legtöbb szülő látott már ilyet; klasszikus formájában egy papír, rajta az előrenyomtatott percentilis-görbékkel, a szülő bejelöli az egyes méréseket, esetleg szépen össze is köti őket, és így meg tudja ítélni a gyermek fejlődősét.
@@ -80,6 +82,7 @@ Végezetül fontos ismét hangsúlyozni, hogy a program pusztán a növekedési 
 * Az előbbi cél érdekében a teljes munkám transzparens: ebben a GitHub repozitóriumban nyilvánosan elérhető tettem a teljes programot, mely alapján bárki reprodukálhatja az egész munkafolyamatot. Letölthető az [R szkript](app.R), az [adatállomány](lmsdat.rds?raw=true) és a percentiliseket számító [segédszkript](lms3_macro_calcz_woload.R) is.
 * A program a WHO referencia növekedési görbéit használja (<a href="https://scielosp.org/scielo.php?script=sci_arttext&pid=S0042-96862007000900010&lng=en&nrm=iso&tlng=en" target="_blank">de Onis, 2007</a>), Rodd és mtsai kiegészítésével (<a href="https://bmcpediatr.biomedcentral.com/articles/10.1186/1471-2431-14-32" target="_blank">Rodd, 2014</a>). A percentilis és _z_-score számításokat a Kanadai Gyermekendokrinológiai Munkacsoport (CPEG) `quickZ` [szkriptjével](https://cpeg-gcep.net/content/who-macro-files-cpeg-revision) végzi. Az adatfájlokat csak minimális mértékben módosítottam, hogy kompatibilis legyen a program hívásaival.
 * Létezik ugyan specifikusan magyar növekedési referencia is (az <a href="http://www.demografia.hu/kiadvanyokonline/index.php/kutatasijelentesek/article/view/394" target="_blank">Országos Longitudinális Gyermeknövekedés-vizsgálat</a>), mely nagyon igényesen tervezett mintavételileg és nagy energiabefektetéssel készült, ám komoly módszertani aggályok <a href="https://www.lll.hu/who_novekedesi_gorbek-milyen_a_szoptatott_csecsemok_atlagos_novekedesi_uteme" target="_blank">merültek fel</a> a bevont gyerekek táplálásával kapcsolatban, ezért használtam inkább a WHO referenciát.
+* Az eredeti WHO referencia 2 év alatt fekvő, 2 év felett álló helyzetben mért testmagasságot feltételez. A WHO [irányelve](http://www.who.int/childgrowth/training/module_b_measuring_growth.pdf) szerint a fekvő testmagasság 0,7 cm-rel nagyobb, mint az álló. Azért, hogy a növekedési görbe ne törjön meg 2 évnél, én ezt a különbséget eltüntettem azzal, hogy a 2 év alatti értékekből 0,7 cm-t levontam (így tehát már az összes egységesen álló helyzetben mért magasság). A dolognak valószínűleg a legtöbb esetben nincsen semmilyen gyakorlati jelentősége, de azért fontos rögzíteni, hogy a program álló helyzetben mért testmagasságot vár (tehát a fekvő helyzetben mért magasságokból elvileg 0,7 cm-t le kell vonni).
 
 # Verziótörténet
 
