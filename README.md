@@ -44,6 +44,8 @@ Fontos hangsúlyozni, hogy ezek az értékek semmit nem mondanak arról, hogy eg
 
 A program - a gyerek nemén túl - egy táblázatot kér be, mely a gyerek növekedési adatait tartalmazza, majd ez alapján kiszámolja belőlük a percentilis értékeket, és azokat a WHO referencia növekedési görbéjén ábrázolja. Az ábrázolás módja testreszabható, és a kapott eredmény képfájlként le is tölthető.
 
+Hogy mi legyen az ábrázolandó jellemző (testmagasság, testtömeg vagy testtömegindex) az az `Ábrázolandó jellemző` nevű legördülő mezőből választható ki.
+
 Fontos ismét hangsúlyozni, hogy a program pusztán a növekedési görbe ábrázolását segíti, nem helyettesíti annak kiértékelését, azt minden esetben egészségügyi szakszemélyzetre kell bízni. Különösen fontos, hogy a "magas" és "alacsony" értékek egyáltalán nem feltétlenül jelentenek bajt (ha már nagyon muszáj valamit mondani, akkor is inkább a változás az érdekes, tehát ha magasból egyszercsak alacsony lesz, vagy fordítva). Szó nincs tehát arról, hogy az 50. percentilis a "jó" érték, amit meg kell próbálni elérni, mint egy teszten a maximum pontot. A görbe - mint minden diagnosztikai eszköz - egyébként is csak a klinikai kép egészével együtt értékelhető.
 
 A növekedési adatokat megadására két út van.
