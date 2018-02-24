@@ -10,7 +10,7 @@ A program címe: http://research.physcon.uni-obuda.hu/NovekedesiGorbeRajzolo/.
 
 A csecsemők, gyermekek fejlődésének követését lehetővé tevő standard növekedési görbék sok-sok évtizede használatban vannak. Valószínűleg a legtöbb szülő (és minden egészségügyis) látott már ilyet; klasszikus formájában egy papír, rajta az előrenyomtatott referencia percentilis-görbékkel, az ember bejelöli az egyes konkrét méréseket, esetleg szépen össze is köti őket, és így meg tudja ítélni a gyermek fejlődősét.
 
-A program kifejlesztésének ötletét az adta, hogy 2018-ban kissé furcsán hatnak a nyomtatott papíron tollal berajzolgatott és vonalzóval összekötögetett növekedési görbék; minden bizonnyal sok szülő, vagy épp védőnő, orvos eleve nem (csak) egy papírfecnire írkálja a számokat, hanem számítógépen (is) rögzíti őket. De ha már így van, és ezek az adatok is megvannak elektronikusan - csakúgy mint a referencia-görbék - akkor miért ne gyártsunk belőle szép, számítógéppel rajzolt növekedési görbét?
+A program kifejlesztésének ötletét az adta, hogy 2018-ban kissé furcsán hatnak a nyomtatott papíron tollal berajzolgatott és vonalzóval összekötögetett növekedési görbék; minden bizonnyal sok szülő, vagy épp védőnő, orvos eleve nem (csak) egy papírfecnire írkálja a számokat, hanem számítógépen (is) rögzíti őket, vagy legalábbis könnyedén be tudja gépelni. De ha már így van, és ezek az adatok is megvannak elektronikusan - csakúgy mint a referencia-görbék - akkor miért ne gyártsunk belőle szép, számítógéppel rajzolt növekedési görbét?
 
 # Kitérő: én mégsem láttam még ilyet, mi az, hogy növekedési görbe meg percentilis és társaik?
 
@@ -44,7 +44,19 @@ Fontos hangsúlyozni, hogy ezek az értékek semmit nem mondanak arról, hogy eg
 
 A program - a gyerek nemén túl - egy táblázatot kér be, mely a gyerek növekedési adatait tartalmazza, majd ez alapján kiszámolja belőlük a percentilis értékeket, és azokat a WHO referencia növekedési görbéjén ábrázolja. Az ábrázolás módja testreszabható, és a kapott eredmény képfájlként le is tölthető.
 
-A növekedési adatokat tartalmazó fájl a Tallózás gombra kattintva válaszható ki; formátuma lehet `.xls` vagy `.xlsx` (Microsoft Excel), illetve az univerzális `.csv` formátum. (A formátumot nem kell megadni, a program a kiterjesztés alapján automatikusan felismeri.)
+Fontos ismét hangsúlyozni, hogy a program pusztán a növekedési görbe ábrázolását segíti, nem helyettesíti annak kiértékelését, azt minden esetben egészségügyi szakszemélyzetre kell bízni. Különösen fontos, hogy a "magas" és "alacsony" értékek egyáltalán nem feltétlenül jelentenek bajt (ha már nagyon muszáj valamit mondani, akkor is inkább a változás az érdekes, tehát ha magasból egyszercsak alacsony lesz, vagy fordítva). Szó nincs tehát arról, hogy az 50. percentilis a "jó" érték, amit meg kell próbálni elérni, mint egy teszten a maximum pontot. A görbe - mint minden diagnosztikai eszköz - egyébként is csak a klinikai kép egészével együtt értékelhető.
+
+A növekedési adatokat megadására két út van.
+
+## Kézi begépelés
+
+Ez esetben egyszerűen be kell vinni a megfelelő adatokat a weboldal jobb oldalán látható táblázatba. A számértékeket be kell gépelni, a mértékegységek pedig legördülő listából választhatóak ki. A táblázat aljára új sor az `Új mérés hozzáadása` feliratú gombra kattintva adható, a legalsó sor pedig az `Utolsó mérés törlése` gombbal törölhető.
+
+Fontos, hogy a fájlból történő beolvasás felülírja az - esetleges - kézzel bevitt adatokat!
+
+## Fájlból történő beolvasás
+
+Ehhez be kell pipálni az `Adatok betöltése fájlból` pontot, majd a megjelenő panelen a `Tallózás` gombra kattintva válaszható ki a fájl; a formátuma lehet `.xls` vagy `.xlsx` (Microsoft Excel), illetve az univerzális `.csv` formátum. (A formátumot nem kell megadni, a program a kiterjesztés alapján automatikusan felismeri.)
 
 Fontos, hogy a fájl beolvasása a 2. sortól kezdődik, az 1. sorban tehát nem szerepelhet mérés, mert a program azt a sort eldobja. (Feltételezi, hogy ott egy fejléc szerepel. Mivel ezt be sem olvassa, így a konkrét tartalma érdektelen.)
 
@@ -74,7 +86,7 @@ Mint látható, a különböző mértékegységek itt is vegyíthetőek, a progr
 
 Példaként letölthető egy demonstrációs állomány [életkort tartalmazó](PeldaEletkor.xlsx?raw=true) formátumban, és egy [mérési dátumokat tartalmazó](PeldaDatum.xlsx?raw=true) formátumban.
 
-Végezetül fontos ismét hangsúlyozni, hogy a program pusztán a növekedési görbe ábrázolását segíti, nem helyettesíti annak kiértékelését, azt minden esetben egészségügyi szakszemélyzetre kell bízni. Különösen fontos, hogy a "magas" és "alacsony" értékek egyáltalán nem feltétlenül jelentenek bajt (ha már nagyon muszáj valamit mondani, akkor is inkább a változás az érdekes, tehát ha magasból egyszercsak alacsony lesz, vagy fordítva). Szó nincs tehát arról, hogy az 50. percentilis a "jó" érték, amit meg kell próbálni elérni, mint egy teszten a maximum pontot. A görbe - mint minden diagnosztikai eszköz - egyébként is csak a klinikai kép egészével együtt értékelhető.
+Fontos, hogy a fájlból történő beolvasás felülírja az - esetleges - kézzel bevitt adatokat!
 
 # Technikai megjegyzések
 
@@ -86,6 +98,7 @@ Végezetül fontos ismét hangsúlyozni, hogy a program pusztán a növekedési 
 
 # Verziótörténet
 
-Verzió|Dátum
-------|-----
-v1.00 | 2018-02-22
+Verzió|Dátum|Kommentár
+------|-----|---------
+v1.00|2018-02-22|Kiinduló változat.
+v2.00 |2018-02-24|Kézi adatbevitel lehetőségének megteremtése.
