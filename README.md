@@ -50,9 +50,9 @@ A növekedési adatokat megadására két út van.
 
 ## Kézi begépelés
 
-Ez esetben egyszerűen be kell vinni a megfelelő adatokat a weboldal jobb oldalán látható táblázatba. A számértékeket be kell gépelni, a mértékegységek pedig legördülő listából választhatóak ki. A táblázat aljára új sor az `Új mérés hozzáadása` feliratú gombra kattintva adható, a legalsó sor pedig az `Utolsó mérés törlése` gombbal törölhető.
+Ez esetben egyszerűen be kell vinni a megfelelő adatokat a weboldal jobb oldalán látható táblázatba. A számértékeket be kell gépelni, a mértékegységek pedig legördülő listából választhatóak ki. A táblázat aljára új sor az `Új sor hozzáadása` feliratú gombra kattintva adható, a legalsó sor pedig az `Utolsó sor törlése` gombbal törölhető.
 
-Fontos, hogy a fájlból történő beolvasás felülírja az - esetleges - kézzel bevitt adatokat!
+Fontos, hogy a fájlból történő beolvasás felülírja az - esetleges - kézzel bevitt adatokat! (Viszont fájlból történő beolvasás után a kapott adatok minden további nélkül továbbszerkeszthetőek kézzel is.)
 
 ## Fájlból történő beolvasás
 
@@ -86,7 +86,7 @@ Mint látható, a különböző mértékegységek itt is vegyíthetőek, a progr
 
 Példaként letölthető egy demonstrációs állomány [életkort tartalmazó](PeldaEletkor.xlsx?raw=true) formátumban, és egy [mérési dátumokat tartalmazó](PeldaDatum.xlsx?raw=true) formátumban.
 
-Fontos, hogy a fájlból történő beolvasás felülírja az - esetleges - kézzel bevitt adatokat!
+Fontos, hogy a fájlból történő beolvasás felülírja az - esetleges - kézzel bevitt adatokat! (Viszont fájlból történő beolvasás után a kapott adatok minden további nélkül továbbszerkeszthetőek kézzel is.)
 
 # Technikai megjegyzések
 
