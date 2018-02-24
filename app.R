@@ -16,8 +16,8 @@ lmsdat$lms_heightfa_boys$M[ lmsdat$lms_heightfa_boys$Months<=24 ] <-
 lmsdat$lms_heightfa_girls$M[ lmsdat$lms_heightfa_girls$Months<=24 ] <-
   lmsdat$lms_heightfa_girls$M[ lmsdat$lms_heightfa_girls$Months<=24 ] - 0.7
 lmsplot <- lapply( lmsdat, function( l ) {
-  lplot <- data.frame( l$Months, sapply( qs, function( q ) apply( l, 1,
-                                                                  function( x ) x["M"]*( 1+x["L"]*x["S"]*qnorm(q) )^( 1/x["L"] ) ) ) )
+  lplot <- data.frame( l$Months, sapply( qs, function( q )
+    apply( l, 1, function( x ) x["M"]*( 1+x["L"]*x["S"]*qnorm(q) )^( 1/x["L"] ) ) ) )
   colnames( lplot ) <- c( "Months", qs*100 )
   lplot <- reshape( lplot, varying = list( colnames( lplot )[ -1 ] ), v.names = "Measurement",
                     timevar = "Percentile", times = colnames( lplot )[ -1 ], direction = "long" )[ , 1:3 ]
@@ -47,19 +47,25 @@ ui <- fluidPage(
                           selectInput( "fileformat", "A fájl formátuma:", c( "A fájl az életkorokat tartalmazza" = 1,
                                                                              "A fájl a mérések időpontját tartalmazza" = 2 ) ),
                           conditionalPanel( "input.fileformat==2",
-                                            dateInput( "birthdate", "A gyermek születési dátuma:", weekstart = 1, language = "hu" ) ),
+                                            dateInput( "birthdate", "A gyermek születési dátuma:", weekstart = 1,
+                                                       language = "hu" ) ),
                           conditionalPanel( "input.fileformat==1",
                                             p( "A fájl beolvasása a 2. sortól kezdődik (feltételezzük, hogy az első a fejléc)." ),
                                             p( "A fájl a következő oszlopokat kell, hogy tartalmazza:" ),
-                                            tags$ol( tags$li( "Életkor" ), tags$li( "Életkor mértékegysége (hét vagy hónap vagy év)" ),
-                                                     tags$li( "Testmagasság" ), tags$li( "Testmagasság mértékegysége (cm vagy m)" ),
-                                                     tags$li( "Testtömeg" ), tags$li( "Testtömeg mértékegysége (g vagy kg)" ), type = "A" ) ),
+                                            tags$ol( tags$li( "Életkor" ),
+                                                     tags$li( "Életkor mértékegysége (hét vagy hónap vagy év)" ),
+                                                     tags$li( "Testmagasság" ),
+                                                     tags$li( "Testmagasság mértékegysége (cm vagy m)" ),
+                                                     tags$li( "Testtömeg" ), tags$li( "Testtömeg mértékegysége (g vagy kg)" ),
+                                                     type = "A" ) ),
                           conditionalPanel( "input.fileformat==2",
                                             p( "A fájl beolvasása a 2. sortól kezdődik (feltételezzük, hogy az első a fejléc)." ),
                                             p( "A fájl a következő oszlopokat kell, hogy tartalmazza:" ),
                                             tags$ol( tags$li( "Mérés időpontja (csv esetében ÉÉÉÉ-HH-NN formában)" ),
-                                                     tags$li( "Testmagasság" ), tags$li( "Testmagasság mértékegysége (cm vagy m)" ),
-                                                     tags$li( "Testtömeg" ), tags$li( "Testtömeg mértékegysége (g vagy kg)" ), type = "A" ) ),
+                                                     tags$li( "Testmagasság" ),
+                                                     tags$li( "Testmagasság mértékegysége (cm vagy m)" ),
+                                                     tags$li( "Testtömeg" ), tags$li( "Testtömeg mértékegysége (g vagy kg)" ),
+                                                     type = "A" ) ),
                           actionButton( "loadfromfile", "Betöltés" ),
                           helpText( "Vigyázat, az adatok fájlból betöltése felülírja a kézzel beírt adatokat!")
                         )
@@ -72,7 +78,8 @@ ui <- fluidPage(
       conditionalPanel( "input.advanced==1",
                         selectInput( "pointlabelpos", "Pontok feliratainak helye:", c( "Pont alatt" = 1, "Ponttól balra" = 2,
                                                                                        "Pont felett" = 3, "Ponttól jobbra" = 4,
-                                                                                       "Optimálisan (FField)" = 5 ), selected = 3 ),
+                                                                                       "Optimálisan (FField)" = 5 ),
+                                     selected = 3 ),
                         selectInput( "pointlabeltext", "Pontok feliratai:", c( "Percentilis"  = "P", "z-score" = "Z",
                                                                                "Percentilis (z-score)" = "PZ",
                                                                                "z-score (percentilis)" = "ZP" ) ) )
@@ -113,7 +120,8 @@ server <- function(input, output) {
     }
     if( !input$rawdata$type%in%c( "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                                   "text/csv" ) ) {
-      showModal( modalDialog( "A program csak csv, xls és xlsx formátumú fájlokat tud feldolgozni!", footer = modalButton( "OK" ) ) )
+      showModal( modalDialog( "A program csak csv, xls és xlsx formátumú fájlokat tud feldolgozni!",
+                              footer = modalButton( "OK" ) ) )
       return()
     }
     if ( tail( strsplit( input$rawdata$name, ".", fixed = TRUE )[[ 1 ]], 1 )=="csv" ) {
@@ -150,7 +158,8 @@ server <- function(input, output) {
       }
       rd$date <- as.Date( as.character( rd$date ), format = "%Y-%m-%d" )
       if( min( rd$date )<input$birthdate ) {
-        showModal( modalDialog( "A mérések dátumai mind későbbiek kellenek legyenek, mint a születési dátum!", footer = modalButton( "OK" ) ) )
+        showModal( modalDialog( "A mérések dátumai mind későbbiek kellenek legyenek, mint a születési dátum!",
+                                footer = modalButton( "OK" ) ) )
         return()
       }
       rd$age <- as.numeric( difftime( rd$date, input$birthdate, units = "days" )/30.5 )
@@ -224,7 +233,8 @@ server <- function(input, output) {
                                                  switch( input$sex, "M" = "boys", "F" = "girls" ) ) ) )
     
     eranx <- extendrange( range( ProcData$agemons ), f = 0.1 )
-    erany <- extendrange( range( c( ProcData[[ input$target ]], lmsplotactual$Measurement[ lmsplotactual$Months < eranx[ 2 ] ] ) ), f = 0.1 )
+    erany <- extendrange( range( c( ProcData[[ input$target ]],
+                                    lmsplotactual$Measurement[ lmsplotactual$Months < eranx[ 2 ] ] ) ), f = 0.1 )
     
     p1 <- xyplot( Measurement ~ Months, groups = Percentile, data = lmsplotactual[ lmsplotactual$Months < eranx[ 2 ], ],
                   rawdata = ProcData, xlim = eranx+c( 0, 1 ), ylim = erany, type = "l", grid = TRUE, xlab = "Életkor [hónap]",
@@ -248,11 +258,12 @@ server <- function(input, output) {
                       ff <- FFieldPtRep( rawdata[, c( "agemons", input$target ) ], rep.fact = 2, attr.fact = 0.85 )
                       panel.text( ff$x, ff$y, pointlabtext, col = "blue" )
                     } else {
-                      panel.text( rawdata$agemons, rawdata[[ input$target ]], pointlabtext, col = "blue", pos = input$pointlabelpos )
+                      panel.text( rawdata$agemons, rawdata[[ input$target ]], pointlabtext, col = "blue",
+                                  pos = input$pointlabelpos )
                     }
                   } )
-    p2 <- grid.text( "http://research.physcon.uni-obuda.hu/NovekedesiGorbeRajzolo\nFerenci Tamás, 2018", 0.06, 0.035, just = "left",
-                     draw = TRUE )
+    p2 <- grid.text( "http://research.physcon.uni-obuda.hu/NovekedesiGorbeRajzolo\nFerenci Tamás, 2018", 0.06, 0.035,
+                     just = "left", draw = TRUE )
     return( list( p1 = p1, p2 = p2 ) )
   } )
   
@@ -264,8 +275,8 @@ server <- function(input, output) {
   
   output$PlotDownloadPDF <- downloadHandler(
     filename = function() {
-      paste0( "NovekedesiGorbe_", if( is.character( input$rawdata$name ) ) strsplit( input$rawdata$name, ".", fixed = TRUE)[[ 1 ]][ 1 ],
-              "_", Sys.Date(), ".pdf" )
+      paste0( "NovekedesiGorbe_", if( is.character( input$rawdata$name ) )
+        strsplit( input$rawdata$name, ".", fixed = TRUE)[[ 1 ]][ 1 ], "_", Sys.Date(), ".pdf" )
     },
     content = function( file ) {
       temp <- plotInput()
@@ -277,8 +288,8 @@ server <- function(input, output) {
   
   output$PlotDownloadPNG <- downloadHandler(
     filename = function() {
-      paste0( "NovekedesiGorbe_", if( is.character( input$rawdata$name ) ) strsplit( input$rawdata$name, ".", fixed = TRUE)[[ 1 ]][ 1 ],
-              "_", Sys.Date(), ".png" )
+      paste0( "NovekedesiGorbe_", if( is.character( input$rawdata$name ) )
+        strsplit( input$rawdata$name, ".", fixed = TRUE)[[ 1 ]][ 1 ], "_", Sys.Date(), ".png" )
     },
     content = function( file ) {
       temp <- plotInput()
