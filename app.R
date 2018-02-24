@@ -4,6 +4,7 @@ library( lattice )
 library( FField )
 library( grid )
 library( stringi )
+library( rhandsontable )
 
 source( "lms3_macro_calcz_woload.R" )
 
@@ -28,7 +29,7 @@ ui <- fluidPage(
   
   tags$style( ".shiny-file-input-progress {display: none}" ),
   
-  titlePanel("Növekedési görbe rajzoló"),
+  titlePanel( "Növekedési görbe rajzoló" ),
   
   h4( "Írta: Ferenci Tamás (Óbudai Egyetem, Élettani Szabályozások Kutatóközpont)" ),
   p( "A program használatát részletesen bemutató súgó, valamint a technikai részletek",
@@ -38,24 +39,33 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
       selectInput( "sex", "A gyermek neme:", c( "Fiú" = "M", "Lány" = "F" ) ),
-      fileInput( "rawdata", "A növekedési adatokat tartalmazó fájl (csv, xls vagy xlsx):",
-                 buttonLabel = "Tallózás", placeholder = "Még nincs kiválasztva fájl!" ),
-      selectInput( "fileformat", "A fájl formátuma:", c( "A fájl az életkorokat tartalmazza" = 1,
-                                                         "A fájl a mérések időpontját tartalmazza" = 2 ) ),
-      conditionalPanel( "input.fileformat==2",
-                        dateInput( "birthdate", "A gyermek születési dátuma:", weekstart = 1, language = "hu" ) ),
-      conditionalPanel( "input.fileformat==1",
-                        p( "A fájl beolvasása a 2. sortól kezdődik (feltételezzük, hogy az első a fejléc)." ),
-                        p( "A fájl a következő oszlopokat kell, hogy tartalmazza:" ),
-                        tags$ol( tags$li( "Életkor" ), tags$li( "Életkor mértékegysége (hét vagy hónap vagy év)" ),
-                                 tags$li( "Testmagasság" ), tags$li( "Testmagasság mértékegysége (cm vagy m)" ),
-                                 tags$li( "Testtömeg" ), tags$li( "Testtömeg mértékegysége (g vagy kg)" ), type = "A" ) ),
-      conditionalPanel( "input.fileformat==2",
-                        p( "A fájl beolvasása a 2. sortól kezdődik (feltételezzük, hogy az első a fejléc)." ),
-                        p( "A fájl a következő oszlopokat kell, hogy tartalmazza:" ),
-                        tags$ol( tags$li( "Mérés időpontja (csv esetében ÉÉÉÉ-HH-NN formában)" ),
-                                 tags$li( "Testmagasság" ), tags$li( "Testmagasság mértékegysége (cm vagy m)" ),
-                                 tags$li( "Testtömeg" ), tags$li( "Testtömeg mértékegysége (g vagy kg)" ), type = "A" ) ),
+      checkboxInput( "loadfromfileparams", "Adatok betöltése fájlból" ),
+      conditionalPanel( "input.loadfromfileparams==1",
+                        wellPanel(
+                          fileInput( "rawdata", "A növekedési adatokat tartalmazó fájl (csv, xls vagy xlsx):",
+                                     buttonLabel = "Tallózás", placeholder = "Még nincs kiválasztva fájl!" ),
+                          selectInput( "fileformat", "A fájl formátuma:", c( "A fájl az életkorokat tartalmazza" = 1,
+                                                                             "A fájl a mérések időpontját tartalmazza" = 2 ) ),
+                          conditionalPanel( "input.fileformat==2",
+                                            dateInput( "birthdate", "A gyermek születési dátuma:", weekstart = 1, language = "hu" ) ),
+                          conditionalPanel( "input.fileformat==1",
+                                            p( "A fájl beolvasása a 2. sortól kezdődik (feltételezzük, hogy az első a fejléc)." ),
+                                            p( "A fájl a következő oszlopokat kell, hogy tartalmazza:" ),
+                                            tags$ol( tags$li( "Életkor" ), tags$li( "Életkor mértékegysége (hét vagy hónap vagy év)" ),
+                                                     tags$li( "Testmagasság" ), tags$li( "Testmagasság mértékegysége (cm vagy m)" ),
+                                                     tags$li( "Testtömeg" ), tags$li( "Testtömeg mértékegysége (g vagy kg)" ), type = "A" ) ),
+                          conditionalPanel( "input.fileformat==2",
+                                            p( "A fájl beolvasása a 2. sortól kezdődik (feltételezzük, hogy az első a fejléc)." ),
+                                            p( "A fájl a következő oszlopokat kell, hogy tartalmazza:" ),
+                                            tags$ol( tags$li( "Mérés időpontja (csv esetében ÉÉÉÉ-HH-NN formában)" ),
+                                                     tags$li( "Testmagasság" ), tags$li( "Testmagasság mértékegysége (cm vagy m)" ),
+                                                     tags$li( "Testtömeg" ), tags$li( "Testtömeg mértékegysége (g vagy kg)" ), type = "A" ) ),
+                          actionButton( "loadfromfile", "Betöltés" ),
+                          helpText( "Vigyázat, az adatok fájlból betöltése felülírja a kézzel beírt adatokat!")
+                        )
+      ),
+      actionButton( "addrow", "Új mérés hozzáadása" ),
+      actionButton( "deleterow", "Utolsó mérés törlése" ),
       selectInput( "target", "Ábrázolandó jellemző:", c( "Testmagasság" = "height", "Testtömeg" = "weight",
                                                          "Testtömegindex (BMI)" = "bmi" ) ),
       downloadButton( "PlotDownloadPDF", "Az ábra letöltése (PDF)" ),
@@ -71,7 +81,12 @@ ui <- fluidPage(
     ),
     
     mainPanel(
-      plotOutput( "resultplot" )
+      tabsetPanel(
+        tabPanel( "Adatok", rHandsontableOutput( "inputdata" ) ),
+        tabPanel( "Növekedési görbe", plotOutput( "resultplot" ) ),
+        id = "maintabset"
+      )
+      
     )
   ),
   
@@ -88,11 +103,20 @@ ui <- fluidPage(
 
 server <- function(input, output) {
   
-  RawData <- reactive( { if( !is.null( input$rawdata ) ) {
-    validate( need( input$rawdata$type%in%c( "application/vnd.ms-excel",
-                                             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                                             "text/csv" ),
-                    "A program csak csv, xls és xlsx formátumú fájlokat tud feldolgozni!" ) )
+  values <- reactiveValues( RawData = data.frame( age = NA_real_, ageuom = factor( NA, levels = c( "hét", "hónap", "év" ) ),
+                                                  height = NA_real_, heightuom = factor( NA, levels = c( "cm", "m" ) ),
+                                                  weight = NA_real_, weightuom = factor( NA, levels = c( "g", "kg" ) ) ) )
+  
+  observeEvent( input$loadfromfile, {
+    if( is.null( input$rawdata ) ) {
+      showModal( modalDialog( "Nem adott meg betöltendő fájlt!", footer = modalButton( "OK" ) ) )
+      return()
+    }
+    if( !input$rawdata$type%in%c( "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                                  "text/csv" ) ) {
+      showModal( modalDialog( "A program csak csv, xls és xlsx formátumú fájlokat tud feldolgozni!", footer = modalButton( "OK" ) ) )
+      return()
+    }
     if ( tail( strsplit( input$rawdata$name, ".", fixed = TRUE )[[ 1 ]], 1 )=="csv" ) {
       rd <- read.csv2( input$rawdata$datapath, stringsAsFactors = FALSE,
                        fileEncoding = stri_enc_detect( input$rawdata$datapath )[[ 1 ]]$Encoding[ 1 ] )
@@ -100,58 +124,103 @@ server <- function(input, output) {
       rd <- read_excel( input$rawdata$datapath )
     }
     if ( input$fileformat==1 ) {
-      validate( need( ncol( rd )==6, "A fájl 6 oszlopot kell hogy tartalmazzon!" ) )
+      if( ncol( rd )!=6 ) {
+        showModal( modalDialog( "A fájl 6 oszlopot kell hogy tartalmazzon!", footer = modalButton( "OK" ) ) )
+        return()
+      }
       colnames( rd ) <- c( "age", "ageuom", "height", "heightuom", "weight", "weightuom" )
-      validate( need( is.numeric( rd$age ), "Az A oszlop csak számokat tartalmazhat!" ) )
-      validate( need( sum( !unique( rd$ageuom )%in%c( "hét", "hónap", "év" ) )==0,
-                      "A B oszlop csak a hét, hónap és év mértékegységek valamelyikét tartalmazhatja!" ) )
-      rd <- merge( rd, data.frame( ageuom = c( "hét", "hónap", "év" ), convage = c( 1/7, 1, 12 ) ) )
-      rd$agemons <- rd$age*rd$convage
-      rd <- rd[ , c( "agemons", "height", "heightuom", "weight", "weightuom" ) ]
+      if( !is.numeric( rd$age ) ) {
+        showModal( modalDialog( "Az A oszlop csak számokat tartalmazhat!", footer = modalButton( "OK" ) ) )
+        return()
+      }
+      if( sum( !unique( rd$ageuom )%in%c( "hét", "hónap", "év" ) )!=0 ) {
+        showModal( modalDialog( "A B oszlop csak a hét, hónap és év mértékegységek valamelyikét tartalmazhatja!",
+                                footer = modalButton( "OK" ) ) )
+        return()
+      }
     } else {
-      validate( need( ncol( rd )==5, "A fájl 5 oszlopot kell hogy tartalmazzon!" ) )
+      if( ncol( rd )!=5 ) {
+        showModal( modalDialog( "A fájl 5 oszlopot kell hogy tartalmazzon!", footer = modalButton( "OK" ) ) )
+        return()
+      }
       colnames( rd ) <- c( "date", "height", "heightuom", "weight", "weightuom" )
-      validate( need( !is.na( as.Date( as.character( rd$date ), format = "%Y-%m-%d" ) ),
-                      "Az A oszlop dátumot kell, hogy tartalmazzon (csv esetében ÉÉÉÉ-HH-NN formátumban)!" ) )
+      if( is.na( as.Date( as.character( rd$date ), format = "%Y-%m-%d" ) ) ) {
+        showModal( modalDialog( "Az A oszlop dátumot kell, hogy tartalmazzon (csv esetében ÉÉÉÉ-HH-NN formátumban)!",
+                                footer = modalButton( "OK" ) ) )
+        return()
+      }
       rd$date <- as.Date( as.character( rd$date ), format = "%Y-%m-%d" )
-      validate( need( min( rd$date )>=input$birthdate, "A mérések dátumai mind későbbiek kellenek legyenek, mint a születési dátum!" ) )
-      rd$agemons <- as.numeric( difftime( rd$date, input$birthdate, units = "days" )/30.5 )
-      rd <- rd[ , c( "agemons", "height", "heightuom", "weight", "weightuom" ) ]
+      if( min( rd$date )<input$birthdate ) {
+        showModal( modalDialog( "A mérések dátumai mind későbbiek kellenek legyenek, mint a születési dátum!", footer = modalButton( "OK" ) ) )
+        return()
+      }
+      rd$age <- as.numeric( difftime( rd$date, input$birthdate, units = "days" )/30.5 )
+      rd$ageuom <- "hónap"
+    }
+    rd <- rd[ , c( "age", "ageuom", "height", "heightuom", "weight", "weightuom" ) ]
+    if( !is.numeric( rd$height ) ) {
+      showModal( modalDialog( "A testmagasság oszlop csak számokat tartalmazhat!", footer = modalButton( "OK" ) ) )
+      return()
+    }
+    if( sum( !unique( rd$heightuom )%in%c( "cm", "m" ) )!=0 ) {
+      showModal( modalDialog( "A testmagasság mértékegysége csak cm vagy m lehet!", footer = modalButton( "OK" ) ) )
+      return()
+    }
+    if( !is.numeric( rd$weight ) ) {
+      showModal( modalDialog( "A testtömeg oszlop csak számokat tartalmazhat!", footer = modalButton( "OK" ) ) )
+      return()
+    }
+    if( sum( !unique( rd$weightuom )%in%c( "g", "kg" ) )!=0 ) {
+      showModal( modalDialog( "A testtömeg mértékegysége csak g vagy kg lehet!", footer = modalButton( "OK" ) ) )
+      return()
     }
     validate( need( is.numeric( rd$height ), "A testmagasság oszlop csak számokat tartalmazhat!" ),
               need( sum( !unique( rd$heightuom )%in%c( "cm", "m" ) )==0, "A testmagasság mértékegysége csak cm vagy m lehet!" ) )
-    rd <- merge( rd, data.frame( heightuom = c( "cm", "m" ), convheight = c( 1, 100 ) ) )
-    rd$height <- rd$height*rd$convheight
     validate( need( is.numeric( rd$weight ), "A testtömeg oszlop csak számokat tartalmazhat!" ),
               need( sum( !unique( rd$weightuom )%in%c( "g", "kg" ) )==0,
                     "A testtömeg mértékegysége csak g vagy kg lehet!" ) )
+    
+    values$RawData <- data.frame( age = rd$age, ageuom = factor( rd$ageuom, levels = c( "hét", "hónap", "év" ) ),
+                height = rd$height, heightuom = factor( rd$heightuom, levels = c( "cm", "m" ) ),
+                weight = rd$weight, weightuom = factor( rd$weightuom, levels = c( "g", "kg" ) ) )
+  } )
+  
+  calcparams <- function( rd ) {
+    rd <- merge( rd, data.frame( ageuom = c( "hét", "hónap", "év" ), convage = c( 1/7, 1, 12 ) ) )
+    rd$agemons <- rd$age*rd$convage
+    rd <- merge( rd, data.frame( heightuom = c( "cm", "m" ), convheight = c( 1, 100 ) ) )
+    rd$height <- rd$height*rd$convheight
     rd <- merge( rd, data.frame( weightuom = c( "g", "kg" ), convweight = c( 1/1000, 1 ) ) )
     rd$weight <- rd$weight*rd$convweight
     rd$bmi <- rd$weight/(rd$height/100)^2
-    rd$sex <- input$sex
     rd$id <- 1:nrow( rd )
-    rd <- rd[ , c( "id", "agemons", "sex", "height", "weight", "bmi" ) ]
+    rd <- rd[ , c( "id", "agemons", "height", "weight", "bmi" ) ]
+    rd$sex <- input$sex
     rd <- data.frame( rd, calcZ( y = "height", data = rd, lmsdat = lmsdat )[ , c( "zscore", "percentile" ) ],
-                       calcZ( y = "weight", data = rd, lmsdat = lmsdat )[ , c( "zscore", "percentile" ) ],
-                       calcZ( y = "bmi", data = rd, lmsdat = lmsdat )[ , c( "zscore", "percentile" ) ] )
+                      calcZ( y = "weight", data = rd, lmsdat = lmsdat )[ , c( "zscore", "percentile" ) ],
+                      calcZ( y = "bmi", data = rd, lmsdat = lmsdat )[ , c( "zscore", "percentile" ) ] )
     rd <- rd[ order( rd$agemons ), ]
     colnames( rd )[ 7:12 ] <- c( "heightZ", "heightP", "weightZ", "weightP", "bmiZ", "bmiP" )
     return( rd )
   }
-  } )
   
   plotInput <- reactive( {
-    if( is.null( RawData() ) ) return()
+    
+    values$RawData <- hot_to_r( input$inputdata )
+    
+    if( is.null( values$RawData ) | nrow( values$RawData )==1 ) return()
+    
+    ProcData <- calcparams( values$RawData )
     
     lmsplotactual <- eval( parse( text = paste0( "lmsplot$lms_", input$target, "fa_",
                                                  switch( input$sex, "M" = "boys", "F" = "girls" ) ) ) )
     
-    eranx <- extendrange( range( RawData()$agemons ), f = 0.1 )
-    erany <- extendrange( range( c( RawData()[[ input$target ]], lmsplotactual$Measurement[ lmsplotactual$Months < eranx[ 2 ] ] ) ),
+    eranx <- extendrange( range( ProcData$agemons ), f = 0.1 )
+    erany <- extendrange( range( c( ProcData[[ input$target ]], lmsplotactual$Measurement[ lmsplotactual$Months < eranx[ 2 ] ] ) ),
                           f = 0.1 )
     
     p1 <- xyplot( Measurement ~ Months, groups = Percentile, data = lmsplotactual[ lmsplotactual$Months < eranx[ 2 ], ],
-                  rawdata = RawData(), xlim = eranx+c( 0, 1 ), ylim = erany, type = "l", grid = TRUE, xlab = "Életkor [hónap]",
+                  rawdata = ProcData, xlim = eranx+c( 0, 1 ), ylim = erany, type = "l", grid = TRUE, xlab = "Életkor [hónap]",
                   ylab = switch( input$target, height = "Testmagasság [cm]", weight = "Testtömeg [kg]",
                                  bmi = expression("Testtömeg-index [kg/m"^2*"]" ) ),
                   col = c( "red", "orange", "green", "orange", "red" ),
@@ -211,6 +280,25 @@ server <- function(input, output) {
       grid.draw( temp$p2 )
       dev.off()
     } )
+  
+  output$inputdata <- renderRHandsontable( {
+    if ( !is.null( values$RawData ) )
+      hot_table( rhandsontable( values$RawData, colHeaders = c( "Életkor", "", "Testmagasság", "", "Testtömeg", "" ), height = 500 ),
+                 stretchH = "all" )
+  } )
+  
+  observeEvent( input$addrow, {
+    values$RawData <- hot_to_r( input$inputdata )
+    values$RawData <- rbind( values$RawData,
+                             data.frame( age = NA_real_, ageuom = factor( NA, levels = c( "hét", "hónap", "év" ) ),
+                                         height = NA_real_, heightuom = factor( NA, levels = c( "cm", "m" ) ),
+                                         weight = NA_real_, weightuom = factor( NA, levels = c( "g", "kg" ) ) ) )
+  } )
+  
+  observeEvent( input$deleterow, {
+    values$RawData <- hot_to_r( input$inputdata )
+    values$RawData <- values$RawData[ -nrow( values$RawData ), ]
+  } )
   
 }
 
