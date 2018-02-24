@@ -64,8 +64,6 @@ ui <- fluidPage(
                           helpText( "Vigyázat, az adatok fájlból betöltése felülírja a kézzel beírt adatokat!")
                         )
       ),
-      actionButton( "addrow", "Új mérés hozzáadása" ),
-      actionButton( "deleterow", "Utolsó mérés törlése" ),
       selectInput( "target", "Ábrázolandó jellemző:", c( "Testmagasság" = "height", "Testtömeg" = "weight",
                                                          "Testtömegindex (BMI)" = "bmi" ) ),
       downloadButton( "PlotDownloadPDF", "Az ábra letöltése (PDF)" ),
@@ -82,9 +80,10 @@ ui <- fluidPage(
     
     mainPanel(
       tabsetPanel(
-        tabPanel( "Adatok", rHandsontableOutput( "inputdata" ) ),
-        tabPanel( "Növekedési görbe", plotOutput( "resultplot" ) ),
-        id = "maintabset"
+        tabPanel( "Adatok", fluidRow( br(), actionButton( "addrow", "Új sor hozzáadása" ),
+                                      actionButton( "deleterow", "Utolsó sor törlése" ) ),
+                  fluidRow( br(), rHandsontableOutput( "inputdata" ) ) ),
+        tabPanel( "Növekedési görbe", plotOutput( "resultplot" ) )
       )
       
     )
@@ -103,9 +102,9 @@ ui <- fluidPage(
 
 server <- function(input, output) {
   
-  values <- reactiveValues( RawData = data.frame( age = NA_real_, ageuom = factor( NA, levels = c( "hét", "hónap", "év" ) ),
-                                                  height = NA_real_, heightuom = factor( NA, levels = c( "cm", "m" ) ),
-                                                  weight = NA_real_, weightuom = factor( NA, levels = c( "g", "kg" ) ) ) )
+  values <- reactiveValues( RawData = data.frame( age = NA_real_, ageuom = factor( "hónap", levels = c( "hét", "hónap", "év" ) ),
+                                                  height = NA_real_, heightuom = factor( "cm", levels = c( "cm", "m" ) ),
+                                                  weight = NA_real_, weightuom = factor( "g", levels = c( "g", "kg" ) ) ) )
   
   observeEvent( input$loadfromfile, {
     if( is.null( input$rawdata ) ) {
@@ -174,15 +173,10 @@ server <- function(input, output) {
       showModal( modalDialog( "A testtömeg mértékegysége csak g vagy kg lehet!", footer = modalButton( "OK" ) ) )
       return()
     }
-    validate( need( is.numeric( rd$height ), "A testmagasság oszlop csak számokat tartalmazhat!" ),
-              need( sum( !unique( rd$heightuom )%in%c( "cm", "m" ) )==0, "A testmagasság mértékegysége csak cm vagy m lehet!" ) )
-    validate( need( is.numeric( rd$weight ), "A testtömeg oszlop csak számokat tartalmazhat!" ),
-              need( sum( !unique( rd$weightuom )%in%c( "g", "kg" ) )==0,
-                    "A testtömeg mértékegysége csak g vagy kg lehet!" ) )
     
     values$RawData <- data.frame( age = rd$age, ageuom = factor( rd$ageuom, levels = c( "hét", "hónap", "év" ) ),
-                height = rd$height, heightuom = factor( rd$heightuom, levels = c( "cm", "m" ) ),
-                weight = rd$weight, weightuom = factor( rd$weightuom, levels = c( "g", "kg" ) ) )
+                                  height = rd$height, heightuom = factor( rd$heightuom, levels = c( "cm", "m" ) ),
+                                  weight = rd$weight, weightuom = factor( rd$weightuom, levels = c( "g", "kg" ) ) )
   } )
   
   calcparams <- function( rd ) {
@@ -212,12 +206,25 @@ server <- function(input, output) {
     
     ProcData <- calcparams( values$RawData )
     
+    if( length( unique( ProcData$agemons ) )<=2 ) {
+      showModal( modalDialog( "Legalább 2 mérésre szükség van az ábrázoláshoz!", footer = modalButton( "OK" ) ) )
+      return()
+    }
+    
+    ProcData <- ProcData[ !is.na( ProcData$agemons ), ]
+    
+    if( length( unique( ProcData[[ input$target ]] ) )<=2 ) {
+      showModal( modalDialog( "Legalább 2 mérésre szükség van az ábrázoláshoz!", footer = modalButton( "OK" ) ) )
+      return()
+    }
+    
+    ProcData <- ProcData[ !is.na( ProcData[[ input$target ]] ), ]
+    
     lmsplotactual <- eval( parse( text = paste0( "lmsplot$lms_", input$target, "fa_",
                                                  switch( input$sex, "M" = "boys", "F" = "girls" ) ) ) )
     
     eranx <- extendrange( range( ProcData$agemons ), f = 0.1 )
-    erany <- extendrange( range( c( ProcData[[ input$target ]], lmsplotactual$Measurement[ lmsplotactual$Months < eranx[ 2 ] ] ) ),
-                          f = 0.1 )
+    erany <- extendrange( range( c( ProcData[[ input$target ]], lmsplotactual$Measurement[ lmsplotactual$Months < eranx[ 2 ] ] ) ), f = 0.1 )
     
     p1 <- xyplot( Measurement ~ Months, groups = Percentile, data = lmsplotactual[ lmsplotactual$Months < eranx[ 2 ], ],
                   rawdata = ProcData, xlim = eranx+c( 0, 1 ), ylim = erany, type = "l", grid = TRUE, xlab = "Életkor [hónap]",
@@ -283,16 +290,17 @@ server <- function(input, output) {
   
   output$inputdata <- renderRHandsontable( {
     if ( !is.null( values$RawData ) )
-      hot_table( rhandsontable( values$RawData, colHeaders = c( "Életkor", "", "Testmagasság", "", "Testtömeg", "" ), height = 500 ),
+      hot_table( rhandsontable( values$RawData, colHeaders = c( "Életkor", "mértékegység", "Testmagasság", "mértékegység",
+                                                                "Testtömeg", "mértékegység" ), height = 500 ),
                  stretchH = "all" )
   } )
   
   observeEvent( input$addrow, {
     values$RawData <- hot_to_r( input$inputdata )
     values$RawData <- rbind( values$RawData,
-                             data.frame( age = NA_real_, ageuom = factor( NA, levels = c( "hét", "hónap", "év" ) ),
-                                         height = NA_real_, heightuom = factor( NA, levels = c( "cm", "m" ) ),
-                                         weight = NA_real_, weightuom = factor( NA, levels = c( "g", "kg" ) ) ) )
+                             data.frame( age = NA_real_, ageuom = factor( "hónap", levels = c( "hét", "hónap", "év" ) ),
+                                         height = NA_real_, heightuom = factor( "cm", levels = c( "cm", "m" ) ),
+                                         weight = NA_real_, weightuom = factor( "g", levels = c( "g", "kg" ) ) ) )
   } )
   
   observeEvent( input$deleterow, {
