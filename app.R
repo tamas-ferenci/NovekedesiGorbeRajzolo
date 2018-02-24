@@ -44,27 +44,32 @@ ui <- fluidPage(
                         wellPanel(
                           fileInput( "rawdata", "A növekedési adatokat tartalmazó fájl (csv, xls vagy xlsx):",
                                      buttonLabel = "Tallózás", placeholder = "Még nincs kiválasztva fájl!" ),
-                          selectInput( "fileformat", "A fájl formátuma:", c( "A fájl az életkorokat tartalmazza" = 1,
-                                                                             "A fájl a mérések időpontját tartalmazza" = 2 ) ),
+                          selectInput( "fileformat", "A fájl formátuma:",
+                                       c( "A fájl az életkorokat tartalmazza" = 1,
+                                          "A fájl a mérések időpontját tartalmazza" = 2 ) ),
                           conditionalPanel( "input.fileformat==2",
                                             dateInput( "birthdate", "A gyermek születési dátuma:", weekstart = 1,
                                                        language = "hu" ) ),
                           conditionalPanel( "input.fileformat==1",
-                                            p( "A fájl beolvasása a 2. sortól kezdődik (feltételezzük, hogy az első a fejléc)." ),
+                                            p( "A fájl beolvasása a 2. sortól kezdődik
+                                               (feltételezzük, hogy az első a fejléc)." ),
                                             p( "A fájl a következő oszlopokat kell, hogy tartalmazza:" ),
                                             tags$ol( tags$li( "Életkor" ),
                                                      tags$li( "Életkor mértékegysége (hét vagy hónap vagy év)" ),
                                                      tags$li( "Testmagasság" ),
                                                      tags$li( "Testmagasság mértékegysége (cm vagy m)" ),
-                                                     tags$li( "Testtömeg" ), tags$li( "Testtömeg mértékegysége (g vagy kg)" ),
+                                                     tags$li( "Testtömeg" ),
+                                                     tags$li( "Testtömeg mértékegysége (g vagy kg)" ),
                                                      type = "A" ) ),
                           conditionalPanel( "input.fileformat==2",
-                                            p( "A fájl beolvasása a 2. sortól kezdődik (feltételezzük, hogy az első a fejléc)." ),
+                                            p( "A fájl beolvasása a 2. sortól kezdődik
+                                               (feltételezzük, hogy az első a fejléc)." ),
                                             p( "A fájl a következő oszlopokat kell, hogy tartalmazza:" ),
                                             tags$ol( tags$li( "Mérés időpontja (csv esetében ÉÉÉÉ-HH-NN formában)" ),
                                                      tags$li( "Testmagasság" ),
                                                      tags$li( "Testmagasság mértékegysége (cm vagy m)" ),
-                                                     tags$li( "Testtömeg" ), tags$li( "Testtömeg mértékegysége (g vagy kg)" ),
+                                                     tags$li( "Testtömeg" ),
+                                                     tags$li( "Testtömeg mértékegysége (g vagy kg)" ),
                                                      type = "A" ) ),
                           actionButton( "loadfromfile", "Betöltés" ),
                           helpText( "Vigyázat, az adatok fájlból betöltése felülírja a kézzel beírt adatokat!")
@@ -77,7 +82,8 @@ ui <- fluidPage(
       checkboxInput( "advanced", "Haladó beállítások megjelenítése" ),
       conditionalPanel( "input.advanced==1",
                         selectInput( "pointlabelpos", "Pontok feliratainak helye:", c( "Pont alatt" = 1, "Ponttól balra" = 2,
-                                                                                       "Pont felett" = 3, "Ponttól jobbra" = 4,
+                                                                                       "Pont felett" = 3,
+                                                                                       "Ponttól jobbra" = 4,
                                                                                        "Optimálisan (FField)" = 5 ),
                                      selected = 3 ),
                         selectInput( "pointlabeltext", "Pontok feliratai:", c( "Percentilis"  = "P", "z-score" = "Z",
@@ -109,7 +115,8 @@ ui <- fluidPage(
 
 server <- function(input, output) {
   
-  values <- reactiveValues( RawData = data.frame( age = NA_real_, ageuom = factor( "hónap", levels = c( "hét", "hónap", "év" ) ),
+  values <- reactiveValues( RawData = data.frame( age = NA_real_, ageuom = factor( "hónap",
+                                                                                   levels = c( "hét", "hónap", "év" ) ),
                                                   height = NA_real_, heightuom = factor( "cm", levels = c( "cm", "m" ) ),
                                                   weight = NA_real_, weightuom = factor( "g", levels = c( "g", "kg" ) ) ) )
   
@@ -118,8 +125,8 @@ server <- function(input, output) {
       showModal( modalDialog( "Nem adott meg betöltendő fájlt!", footer = modalButton( "OK" ) ) )
       return()
     }
-    if( !input$rawdata$type%in%c( "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                                  "text/csv" ) ) {
+    if( !input$rawdata$type%in%c( "application/vnd.ms-excel",
+                                  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "text/csv" ) ) {
       showModal( modalDialog( "A program csak csv, xls és xlsx formátumú fájlokat tud feldolgozni!",
                               footer = modalButton( "OK" ) ) )
       return()
@@ -237,16 +244,16 @@ server <- function(input, output) {
                                     lmsplotactual$Measurement[ lmsplotactual$Months < eranx[ 2 ] ] ) ), f = 0.1 )
     
     p1 <- xyplot( Measurement ~ Months, groups = Percentile, data = lmsplotactual[ lmsplotactual$Months < eranx[ 2 ], ],
-                  rawdata = ProcData, xlim = eranx+c( 0, 1 ), ylim = erany, type = "l", grid = TRUE, xlab = "Életkor [hónap]",
+                  rawdata = ProcData, xlim = eranx+c( 0, 1 ), ylim = erany, type = "l", grid = TRUE,
                   ylab = switch( input$target, height = "Testmagasság [cm]", weight = "Testtömeg [kg]",
-                                 bmi = expression("Testtömeg-index [kg/m"^2*"]" ) ),
+                                 bmi = expression("Testtömeg-index [kg/m"^2*"]" ) ),  xlab = "Életkor [hónap]",
                   col = c( "red", "orange", "green", "orange", "red" ),
                   panel = function( rawdata, ... ) {
                     dotdotdot <- list( ... )
                     panel.xyplot( ... )
                     panel.xyplot( rawdata$agemons, rawdata[[ input$target ]], type = "b", col = "blue", lwd = 2, pch = 19 )
-                    panel.text( rep( eranx[ 2 ]+0.5, 5 ), tapply( dotdotdot$y, dotdotdot$groups, max ), paste0( "P", qs*100 ),
-                                col = c( "red", "orange", "green", "orange", "red" ) )
+                    panel.text( rep( eranx[ 2 ]+0.5, 5 ), tapply( dotdotdot$y, dotdotdot$groups, max ),
+                                paste0( "P", qs*100 ), col = c( "red", "orange", "green", "orange", "red" ) )
                     pointlabtext <- switch( input$pointlabeltext,
                                             "P" = rawdata[[ paste0( input$target, "P" ) ]],
                                             "Z" = rawdata[[ paste0( input$target, "Z" ) ]],
