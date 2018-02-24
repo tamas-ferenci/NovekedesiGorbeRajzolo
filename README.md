@@ -103,4 +103,5 @@ Fontos, hogy a fájlból történő beolvasás felülírja az - esetleges - kéz
 Verzió|Dátum|Kommentár
 ------|-----|---------
 v1.00|2018-02-22|Kiinduló változat.
-v2.00 |2018-02-24|Kézi adatbevitel lehetőségének megteremtése.
+v2.00|2018-02-24|Kézi adatbevitel lehetőségének megteremtése.
+v2.01|2018-02-25|<ul><li>A felület ergonómiai fejlesztése.</li><li>Az egyes jellemzők külön-külön ábrázolhatóságának megteremtése (nem kell mind testtömeget, mind testmagasságot kötelezően megadni).</li><li>Hiányzó értékek javított kezelése.</li><li>Dokumentáció javítása.</li></ul>
