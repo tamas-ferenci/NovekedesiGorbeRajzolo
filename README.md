@@ -50,7 +50,7 @@ A `Haladó lehetőségek megjelenítése` opciót bepipálva néhány speciális
 * Beállítható, hogy a növekedés görbe pontjaira rakott feliratok pontosan hol jelenjenek meg (`Pontok feliratainak helye`).
 * Beállítható, hogy e feliratok pontosan mit tartalmazzanak, _z_-score-t, percentilist, esetleg mindkettőt, és ez utóbbi esetben milyen formátumban (`Pontok feliratai`).
 * Az ábra címmel látható el (`Az ábra címe`).
-* A feldolgozott bemenő adatok le is tölthetőek, `Haladó lehetőségek megjelenítése` formátumban (`A feldolgozott adatok letöltése (CSV)`).
+* A feldolgozott bemenő adatok le is tölthetőek, `csv` formátumban (`A feldolgozott adatok letöltése (CSV)`).
 
 Fontos ismét hangsúlyozni, hogy a program pusztán a növekedési görbe ábrázolását segíti, nem helyettesíti annak kiértékelését, azt minden esetben egészségügyi szakszemélyzetre kell bízni. Különösen fontos, hogy a "magas" és "alacsony" értékek egyáltalán nem feltétlenül jelentenek bajt (ha már nagyon muszáj valamit mondani, akkor is inkább a változás az érdekes, tehát ha magasból egyszercsak alacsony lesz, vagy fordítva). Szó nincs tehát arról, hogy az 50. percentilis a "jó" érték, amit meg kell próbálni elérni, mint egy teszten a maximum pontot. A görbe - mint minden diagnosztikai eszköz - egyébként is csak a klinikai kép egészével együtt értékelhető.
 
