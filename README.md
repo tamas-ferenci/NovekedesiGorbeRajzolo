@@ -46,6 +46,12 @@ A program - a gyerek nemén túl - egy táblázatot kér be, mely a gyerek növe
 
 Hogy mi legyen az ábrázolandó jellemző (testmagasság, testtömeg vagy testtömegindex) az az `Ábrázolandó jellemző` nevű legördülő mezőből választható ki.
 
+A `Haladó lehetőségek megjelenítése` opciót bepipálva néhány speciálisabb lehetőség nyílik meg:
+* Beállítható, hogy a növekedés görbe pontjaira rakott feliratok pontosan hol jelenjenek meg (`Pontok feliratainak helye`).
+* Beállítható, hogy e feliratok pontosan mit tartalmazzanak, _z_-score-t, percentilist, esetleg mindkettőt, és ez utóbbi esetben milyen formátumban (`Pontok feliratai`).
+* Az ábra címmel látható el (`Az ábra címe`).
+* A feldolgozott bemenő adatok le is tölthetőek, `Haladó lehetőségek megjelenítése` formátumban (`A feldolgozott adatok letöltése (CSV)`).
+
 Fontos ismét hangsúlyozni, hogy a program pusztán a növekedési görbe ábrázolását segíti, nem helyettesíti annak kiértékelését, azt minden esetben egészségügyi szakszemélyzetre kell bízni. Különösen fontos, hogy a "magas" és "alacsony" értékek egyáltalán nem feltétlenül jelentenek bajt (ha már nagyon muszáj valamit mondani, akkor is inkább a változás az érdekes, tehát ha magasból egyszercsak alacsony lesz, vagy fordítva). Szó nincs tehát arról, hogy az 50. percentilis a "jó" érték, amit meg kell próbálni elérni, mint egy teszten a maximum pontot. A görbe - mint minden diagnosztikai eszköz - egyébként is csak a klinikai kép egészével együtt értékelhető.
 
 A növekedési adatokat megadására két út van.
@@ -105,3 +111,4 @@ Verzió|Dátum|Kommentár
 v1.00|2018-02-22|Kiinduló változat.
 v2.00|2018-02-24|Kézi adatbevitel lehetőségének megteremtése.
 v2.01|2018-02-25|<ul><li>A felület ergonómiai fejlesztése.</li><li>Az egyes jellemzők külön-külön ábrázolhatóságának megteremtése (nem kell mind testtömeget, mind testmagasságot kötelezően megadni).</li><li>Hiányzó értékek javított kezelése.</li><li>Dokumentáció javítása.</li></ul>
+v2.02|2018-02-26|<ul><li>A sorok számozásával kapcsolatos hiba javítása.</li><li>Egyetlen érték is ábrázolható.</li><li>Az ábra címmel látható el.</li><li>A feldolgozott adatok le is tölthetőek (`.csv` formátumban).</li><li>Dokumentáció javítása</li></ul>
