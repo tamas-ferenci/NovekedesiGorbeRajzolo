@@ -64,7 +64,9 @@ Fontos, hogy a fájlból történő beolvasás felülírja az - esetleges - kéz
 
 ## Fájlból történő beolvasás
 
-Ehhez be kell pipálni az `Adatok betöltése fájlból` pontot, majd a megjelenő panelen a `Tallózás` gombra kattintva válaszható ki a fájl; a formátuma lehet `.xls` vagy `.xlsx` (Microsoft Excel), illetve az univerzális `.csv` formátum. (A formátumot nem kell megadni, a program a kiterjesztés alapján automatikusan felismeri.)
+E lehetőség eléréséhez be kell pipálni az `Adatok betöltése fájlból/Google Docs-ról` pontot; ekkor megjelenik a részletes beállításokat lehetővé tevő panel. Két lehetőség van a fájlból történő beolvasásra. Az egyik a számítógépen tárolt állomány használata, ehhez a `A növekedési adatokat tartalmazó fájl helye` pont alatt a `Számítógép` opciót kell választani, majd a megjelenő, `A fájl helye` feliratú soron a `Tallózás` gombra kattintva válaszható ki a fájl; a formátuma lehet `.xls` vagy `.xlsx` (Microsoft Excel), illetve az univerzális `.csv` formátum. (A formátumot nem kell megadni, a program a kiterjesztés alapján automatikusan felismeri.) A másik lehetőség az áttöltés Google Docs-ról, ehhez a `Google Docs` opciót kell választani, majd a megjelenő, `URL` feliratú sorba bemásolni a fájl elérési útját. (A fájl nem kötelező, hogy a Google Docs 'Közzététel az interneten' opciójával közzé legyen téve, elég, ha megosztható linkje van.) A szükséges elérési út a Google Docs jobb felső sarkában lévő 'Megosztás' gombbal kérhető le.)
+
+A most következő további lehetőségek már egységesen igazak mindkét esetben, tehát függetlenek attól, hogy honnan származik a beolvasott fájl.
 
 Fontos, hogy a fájl beolvasása a 2. sortól kezdődik, az 1. sorban tehát nem szerepelhet mérés, mert a program azt a sort eldobja. (Feltételezi, hogy ott egy fejléc szerepel. Mivel ezt be sem olvassa, így a konkrét tartalma érdektelen.)
 
@@ -112,3 +114,4 @@ v1.00|2018-02-22|Kiinduló változat.
 v2.00|2018-02-24|Kézi adatbevitel lehetőségének megteremtése.
 v2.01|2018-02-25|<ul><li>A felület ergonómiai fejlesztése.</li><li>Az egyes jellemzők külön-külön is ábrázolhatóak (nem kell mind testtömeget, mind testmagasságot kötelezően megadni).</li><li>Hiányzó értékek javított kezelése.</li><li>Dokumentáció javítása.</li></ul>
 v2.02|2018-02-26|<ul><li>A sorok számozásával kapcsolatos hiba javítása.</li><li>Egyetlen érték is ábrázolható.</li><li>Az ábra címmel látható el.</li><li>A feldolgozott adatok le is tölthetőek (`.csv` formátumban).</li><li>Dokumentáció javítása</li></ul>
+v2.03|2018-02-27|Google Docs-ból történő importálás lehetőségének megteremtése.
