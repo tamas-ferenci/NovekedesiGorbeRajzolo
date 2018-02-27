@@ -26,7 +26,7 @@ lmsplot <- lapply( lmsdat, function( l ) {
   return( lplot )
 } )
 
-ui <- fluidPage(
+ui <- fluidPage( theme = "owntheme.css",
   
   tags$style( ".shiny-file-input-progress {display: none}" ),
   
@@ -112,7 +112,7 @@ ui <- fluidPage(
   ),
   
   hr(),
-  h4( "Írta: Ferenci Tamás (Óbudai Egyetem, Élettani Szabályozások Kutatóközpont), v2.03" ),
+  h4( "Írta: Ferenci Tamás (Óbudai Egyetem, Élettani Szabályozások Kutatóközpont), v2.04" ),
   
   tags$script( HTML( "var sc_project=11601191; 
                       var sc_invisible=1; 
