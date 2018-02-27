@@ -113,5 +113,6 @@ Verzió|Dátum|Kommentár
 v1.00|2018-02-22|Kiinduló változat.
 v2.00|2018-02-24|Kézi adatbevitel lehetőségének megteremtése.
 v2.01|2018-02-25|<ul><li>A felület ergonómiai fejlesztése.</li><li>Az egyes jellemzők külön-külön is ábrázolhatóak (nem kell mind testtömeget, mind testmagasságot kötelezően megadni).</li><li>Hiányzó értékek javított kezelése.</li><li>Dokumentáció javítása.</li></ul>
-v2.02|2018-02-26|<ul><li>A sorok számozásával kapcsolatos hiba javítása.</li><li>Egyetlen érték is ábrázolható.</li><li>Az ábra címmel látható el.</li><li>A feldolgozott adatok le is tölthetőek (`.csv` formátumban).</li><li>Dokumentáció javítása</li></ul>
+v2.02|2018-02-26|<ul><li>Hibajavítás: a sorok számozása nem mindig folytonos.</li><li>Egyetlen érték is ábrázolható.</li><li>Az ábra címmel látható el.</li><li>A feldolgozott adatok le is tölthetőek (`.csv` formátumban).</li><li>Dokumentáció javítása</li></ul>
 v2.03|2018-02-27|Google Docs-ból történő importálás lehetőségének megteremtése.
+v2.04|2018-02-28|<ul><li>Hibajavítás: adatok betöltése után nem lehet rögtön, megjelenítés nélkül képfájlként lementeni a növekedési görbét.</li><li>Esztétikai javítások a felületen.</li></ul>
