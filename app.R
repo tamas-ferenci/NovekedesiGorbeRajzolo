@@ -20,21 +20,58 @@ lmsplot <- lapply( lmsdat, function( l ) {
   lplot <- data.frame( l$Months, sapply( qs, function( q )
     apply( l, 1, function( x ) x["M"]*( 1+x["L"]*x["S"]*qnorm(q) )^( 1/x["L"] ) ) ) )
   colnames( lplot ) <- c( "Months", qs*100 )
-  lplot <- reshape( lplot, varying = list( colnames( lplot )[ -1 ] ), v.names = "Measurement",
-                    timevar = "Percentile", times = colnames( lplot )[ -1 ], direction = "long" )[ , 1:3 ]
+  lplot <- reshape( lplot, varying = list( colnames( lplot )[ -1 ] ),
+                    v.names = "Measurement", timevar = "Percentile",
+                    times = colnames( lplot )[ -1 ], direction = "long" )[ , 1:3 ]
   lplot$Percentile <- as.numeric( lplot$Percentile )
   return( lplot )
 } )
 
-ui <- fluidPage( theme = "owntheme.css",
+
+
+ui <- fluidPage(
+  theme = "owntheme.css",
+  
+  tags$head( 
+    tags$meta( name = "description", content = "Növekedési görbét a megadott adatok alapján kirajzoló és azt a referenciagörbékkel (percentilisgörbékkel) összevető alkalmazás. Írta: Ferenci Tamás." ),
+    tags$meta( property = "og:title", content = "Növekedési görbe rajzoló" ),
+    tags$meta( property = "og:type", content = "website" ),
+    tags$meta( property = "og:locale", content = "hu_HU" ),
+    tags$meta( property = "og:url",
+               content = "http://research.physcon.uni-obuda.hu/NovekedesiGorbeRajzolo/" ),
+    tags$meta( property = "og:image",
+               content = "http://research.physcon.uni-obuda.hu/NovekedesiGorbe_PeldaEletkor.png" ),
+    tags$meta( property = "og:description", content = "Növekedési görbét a megadott adatok alapján kirajzoló és azt a referenciagörbékkel (percentilisgörbékkel) összevető alkalmazás. Írta: Ferenci Tamás."),
+    tags$meta( name = "DC.Title", content = "Növekedési görbe rajzoló" ),
+    tags$meta( name = "DC.Creator", content = "Ferenci Tamás" ),
+    tags$meta( name = "DC.Subject", content = "növekedési görbe" ),
+    tags$meta( name = "DC.Description", content = "Növekedési görbét a megadott adatok alapján kirajzoló és azt a referenciagörbékkel (percentilisgörbékkel) összevető alkalmazás." ),
+    tags$meta( name = "DC.Publisher",
+               content = "http://research.physcon.uni-obuda.hu/NovekedesiGorbeRajzolo/" ),
+    tags$meta( name = "DC.Contributor", content = "Ferenci Tamás" ),
+    tags$meta( name = "DC.Language", content = "hu_HU" )
+  ),
+  
+  tags$div( id="fb-root" ),
+  tags$script( HTML( "(function(d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0];
+                     if (d.getElementById(id)) return;
+                     js = d.createElement(s); js.id = id;
+                     js.src = 'https://connect.facebook.net/hu_HU/sdk.js#xfbml=1&version=v2.12';
+                     fjs.parentNode.insertBefore(js, fjs);
+                     }(document, 'script', 'facebook-jssdk'));" ) ),
   
   tags$style( ".shiny-file-input-progress {display: none}" ),
   
   titlePanel( "Növekedési görbe rajzoló" ),
   
   p( "A program használatát részletesen bemutató súgó, valamint a technikai részletek",
-     a( "itt", href = "https://github.com/tamas-ferenci/NovekedesiGorbeRajzolo", target = "_blank" ),
-     "olvashatóak el."),
+     a( "itt", href = "https://github.com/tamas-ferenci/NovekedesiGorbeRajzolo",
+        target = "_blank" ), "olvashatóak el." ),
+  div( class="fb-like",
+       "data-href"="http://research.physcon.uni-obuda.hu/NovekedesiGorbeRajzolo/",
+       "data-layout"="standard", "data-action"="like", "data-size"="small",
+       "data-show-faces"="true", "data-share"="true"), p(),
   
   sidebarLayout(
     sidebarPanel(
@@ -112,7 +149,7 @@ ui <- fluidPage( theme = "owntheme.css",
   ),
   
   hr(),
-  h4( "Írta: Ferenci Tamás (Óbudai Egyetem, Élettani Szabályozások Kutatóközpont), v2.04" ),
+  h4( "Írta: Ferenci Tamás (Óbudai Egyetem, Élettani Szabályozások Kutatóközpont), v2.05" ),
   
   tags$script( HTML( "var sc_project=11601191; 
                       var sc_invisible=1; 
@@ -121,7 +158,8 @@ ui <- fluidPage( theme = "owntheme.css",
                       \"https://secure.\" : \"http://www.\");
                       document.write(\"<sc\"+\"ript type='text/javascript' src='\" +
                       scJsHost+
-                      \"statcounter.com/counter/counter.js'></\"+\"script>\");" ), type = "text/javascript" )
+                      \"statcounter.com/counter/counter.js'></\"+\"script>\");" ),
+               type = "text/javascript" )
   
 )
 
@@ -133,7 +171,7 @@ server <- function(input, output) {
                                                   weight = NA_real_, weightuom = factor( "g", levels = c( "g", "kg" ) ) ) )
   
   observeEvent( input$loadfromfile, {
-
+    
     if( input$filesource=="comp" ) {
       
       if( is.null( input$rawdata ) ) {
@@ -160,7 +198,7 @@ server <- function(input, output) {
       }
       tmp <- tempfile( fileext = ".xlsx" )
       download.file( paste0( "https://docs.google.com/spreadsheets/d/", extract_key_from_url( input$gdlink ),
-              "/export?format=xlsx" ), tmp, mode = "wb" )
+                             "/export?format=xlsx" ), tmp, mode = "wb" )
       rd <- read_excel( tmp )
       unlink( tmp )
     }
