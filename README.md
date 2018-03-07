@@ -106,6 +106,12 @@ Fontos, hogy a fájlból történő beolvasás felülírja az - esetleges - kéz
 * Létezik ugyan specifikusan magyar növekedési referencia is (az <a href="http://www.demografia.hu/kiadvanyokonline/index.php/kutatasijelentesek/article/view/394" target="_blank">Országos Longitudinális Gyermeknövekedés-vizsgálat</a>), mely nagyon igényesen tervezett mintavételileg és nagy energiabefektetéssel készült, ám komoly módszertani aggályok <a href="https://www.lll.hu/who_novekedesi_gorbek-milyen_a_szoptatott_csecsemok_atlagos_novekedesi_uteme" target="_blank">merültek fel</a> a bevont gyerekek táplálásával kapcsolatban, ezért használtam inkább a WHO referenciát.
 * Az eredeti WHO referencia 2 év alatt fekvő, 2 év felett álló helyzetben mért testmagasságot feltételez. A WHO [irányelve](http://www.who.int/childgrowth/training/module_b_measuring_growth.pdf) szerint a fekvő testmagasság 0,7 cm-rel nagyobb, mint az álló. Azért, hogy a növekedési görbe ne törjön meg 2 évnél, én ezt a különbséget eltüntettem azzal, hogy a 2 év alatti értékekből 0,7 cm-t levontam (így tehát már az összes egységesen álló helyzetben mért magasság). A dolognak valószínűleg a legtöbb esetben nincsen semmilyen gyakorlati jelentősége, de azért fontos rögzíteni, hogy a program álló helyzetben mért testmagasságot vár (tehát a fekvő helyzetben mért magasságokból elvileg 0,7 cm-t le kell vonni).
 
+# Köszönetnyilvánítás / Acknowledgement
+
+Köszönöm Dr. Atul Sharma-nak (Manitobai Egyetem, Gyermekgyógyászati és Gyermekegészségügyi Tanszék), hogy önzetlenül megosztotta velem a saját hasonló alkalmazásuk kifejlesztése során nyert tapasztalatait, és minden felmerült kérdésemben alapos segítséget nyújtott anélkül, hogy egyáltalán ismert volna. I am grateful to Dr. Atul Sharma (Department of Pediatrics and Child Health, University of Manitoba) for his selfless sharing of his experiences he accumulated during developing similar apps, and answering all my questions in detail without even knowing me.
+
+Köszönöm a továbbfejlesztési javaslatokat és a tesztelést (alfabetikus sorrendben) Bársony Gábornak és Varga Máténak.
+
 # Verziótörténet
 
 Verzió|Dátum|Kommentár
@@ -116,3 +122,4 @@ v2.01|2018-02-25|<ul><li>A felület ergonómiai fejlesztése.</li><li>Az egyes j
 v2.02|2018-02-26|<ul><li>Hibajavítás: a sorok számozása nem mindig folytonos.</li><li>Egyetlen érték is ábrázolható.</li><li>Az ábra címmel látható el.</li><li>A feldolgozott adatok le is tölthetőek (`.csv` formátumban).</li><li>Dokumentáció javítása</li></ul>
 v2.03|2018-02-27|Google Docs-ból történő importálás lehetőségének megteremtése.
 v2.04|2018-02-28|<ul><li>Hibajavítás: adatok betöltése után nem lehet rögtön, megjelenítés nélkül képfájlként lementeni a növekedési görbét.</li><li>Esztétikai javítások a felületen.</li></ul>
+v2.04|2018-03-07|<ul><li>Facebook megosztó gomb hozzáadása a felülethez.</li><li>Dokumentáció bővítése köszönetnyilvánítás ponttal.</li></ul>
