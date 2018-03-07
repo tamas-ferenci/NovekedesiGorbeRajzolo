@@ -2,6 +2,7 @@
 * [Kitérő: én mégsem láttam még ilyet, mi az, hogy növekedési görbe meg percentilis és társaik?](#kitérő-én-mégsem-láttam-még-ilyet-mi-az-hogy-növekedési-görbe-meg-percentilis-és-társaik)
 * [A program használata](#a-program-használata)
 * [Technikai megjegyzések](#technikai-megjegyzések)
+* [Köszönetnyilvánítás / Acknowledgement](#köszönetnyilvánítás--acknowledgement)
 * [Verziótörténet](#verziótörténet)
 
 A program címe: http://research.physcon.uni-obuda.hu/NovekedesiGorbeRajzolo/.
