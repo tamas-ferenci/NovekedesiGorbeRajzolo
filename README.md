@@ -63,7 +63,7 @@ Ez esetben egyszerűen be kell vinni a megfelelő adatokat a weboldal jobb oldal
 
 Fontos, hogy a fájlból történő beolvasás felülírja az - esetleges - kézzel bevitt adatokat! (Viszont fájlból történő beolvasás után a kapott adatok minden további nélkül továbbszerkeszthetőek kézzel is.)
 
-## Fájlból történő beolvasás
+## Fájlból, illetve Google Docs-ról történő beolvasás
 
 E lehetőség eléréséhez be kell pipálni az `Adatok betöltése fájlból/Google Docs-ról` pontot; ekkor megjelenik a részletes beállításokat lehetővé tevő panel. Két lehetőség van a fájlból történő beolvasásra. Az egyik a számítógépen tárolt állomány használata, ehhez a `A növekedési adatokat tartalmazó fájl helye` pont alatt a `Számítógép` opciót kell választani, majd a megjelenő, `A fájl helye` feliratú soron a `Tallózás` gombra kattintva válaszható ki a fájl; a formátuma lehet `.xls` vagy `.xlsx` (Microsoft Excel), illetve az univerzális `.csv` formátum. (A formátumot nem kell megadni, a program a kiterjesztés alapján automatikusan felismeri.) A másik lehetőség az áttöltés Google Docs-ról, ehhez a `Google Docs` opciót kell választani, majd a megjelenő, `URL` feliratú sorba bemásolni a fájl elérési útját. (A fájl nem kötelező, hogy a Google Docs 'Közzététel az interneten' opciójával közzé legyen téve, elég, ha megosztható linkje van.) A szükséges elérési út a Google Docs jobb felső sarkában lévő 'Megosztás' gombbal kérhető le.)
 
