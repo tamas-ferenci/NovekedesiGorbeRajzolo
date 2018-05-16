@@ -39,7 +39,7 @@ Ha pedig ezt több nevezetes percentilisre kirajzoljuk, akkor el is jutunk a nö
 
 Erre a grafikonra, mint háttérre, rárajzolhatóak egy gyermek konkrét adatai (adott életkorban milyen magas volt), és így, a percentilis-görbék révén az egészséges gyerekek eloszlásához viszonyítva, megítélhetővé válik a növekedése.
 
-Fontos hangsúlyozni, hogy ezek az értékek semmit nem mondanak arról, hogy egy adott testmagasság "normális"-e. Az 1. percentilis például elég extrém - de (definíció szerint!) épp azt jelenti, hogy a tökéletesen egészséges gyerekek közül is minden századik van ilyen alacsony.
+Fontos hangsúlyozni, hogy ezek az értékek semmit nem mondanak arról, hogy egy adott testmagasság "normális"-e. Az 1. percentilis például elég extrém - de (definíció szerint!) épp azt jelenti, hogy a tökéletesen egészséges gyerekek közül is minden századik ilyen, vagy ennél alacsonyabb.
 
 # A program használata
 
