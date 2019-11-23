@@ -33,21 +33,26 @@ ui <- fluidPage(
   theme = "owntheme.css",
   
   tags$head( 
-    tags$meta( name = "description", content = "Növekedési görbét a megadott adatok alapján kirajzoló és azt a referenciagörbékkel (percentilisgörbékkel) összevető alkalmazás. Írta: Ferenci Tamás." ),
+    tags$meta( name = "description", content = paste0( "Növekedési görbét a megadott adatok alapján kirajzoló és azt a ",
+                                                       "referenciagörbékkel (percentilisgörbékkel) összevető alkalmazás. ",
+                                                       "Írta: Ferenci Tamás." ) ),
     tags$meta( property = "og:title", content = "Növekedési görbe rajzoló" ),
     tags$meta( property = "og:type", content = "website" ),
     tags$meta( property = "og:locale", content = "hu_HU" ),
     tags$meta( property = "og:url",
-               content = "http://research.physcon.uni-obuda.hu/NovekedesiGorbeRajzolo/" ),
+               content = "https://research.physcon.uni-obuda.hu/NovekedesiGorbeRajzolo/" ),
     tags$meta( property = "og:image",
-               content = "http://research.physcon.uni-obuda.hu/NovekedesiGorbe_PeldaEletkor.png" ),
-    tags$meta( property = "og:description", content = "Növekedési görbét a megadott adatok alapján kirajzoló és azt a referenciagörbékkel (percentilisgörbékkel) összevető alkalmazás. Írta: Ferenci Tamás."),
+               content = "https://research.physcon.uni-obuda.hu/NovekedesiGorbe_PeldaEletkor.png" ),
+    tags$meta( property = "og:description", content = paste0( "Növekedési görbét a megadott adatok alapján kirajzoló és azt a ",
+                                                              "referenciagörbékkel (percentilisgörbékkel) összevető alkalmazás. ",
+                                                              "Írta: Ferenci Tamás." ) ),
     tags$meta( name = "DC.Title", content = "Növekedési görbe rajzoló" ),
     tags$meta( name = "DC.Creator", content = "Ferenci Tamás" ),
     tags$meta( name = "DC.Subject", content = "növekedési görbe" ),
-    tags$meta( name = "DC.Description", content = "Növekedési görbét a megadott adatok alapján kirajzoló és azt a referenciagörbékkel (percentilisgörbékkel) összevető alkalmazás." ),
+    tags$meta( name = "DC.Description", content = paste0( "Növekedési görbét a megadott adatok alapján kirajzoló és azt a ",
+                                                          "referenciagörbékkel (percentilisgörbékkel) összevető alkalmazás." ) ),
     tags$meta( name = "DC.Publisher",
-               content = "http://research.physcon.uni-obuda.hu/NovekedesiGorbeRajzolo/" ),
+               content = "https://research.physcon.uni-obuda.hu/NovekedesiGorbeRajzolo/" ),
     tags$meta( name = "DC.Contributor", content = "Ferenci Tamás" ),
     tags$meta( name = "DC.Language", content = "hu_HU" )
   ),
@@ -69,7 +74,7 @@ ui <- fluidPage(
      a( "itt", href = "https://github.com/tamas-ferenci/NovekedesiGorbeRajzolo",
         target = "_blank" ), "olvashatóak el." ),
   div( class="fb-like",
-       "data-href"="http://research.physcon.uni-obuda.hu/NovekedesiGorbeRajzolo/",
+       "data-href"="https://research.physcon.uni-obuda.hu/NovekedesiGorbeRajzolo/",
        "data-layout"="standard", "data-action"="like", "data-size"="small",
        "data-show-faces"="true", "data-share"="true"), p(),
   
@@ -345,7 +350,7 @@ server <- function(input, output) {
                                   pos = input$pointlabelpos )
                     }
                   } )
-    p2 <- grid.text( "http://research.physcon.uni-obuda.hu/NovekedesiGorbeRajzolo\nFerenci Tamás, 2018", 0.06, 0.035,
+    p2 <- grid.text( "https://research.physcon.uni-obuda.hu/NovekedesiGorbeRajzolo\nFerenci Tamás, 2018", 0.06, 0.035,
                      just = "left", draw = TRUE )
     return( list( p1 = p1, p2 = p2 ) )
   } )
@@ -397,10 +402,10 @@ server <- function(input, output) {
   
   output$inputdata <- renderRHandsontable( {
     if ( !is.null( values$RawData ) )
-      hot_table( rhandsontable( values$RawData, colHeaders = c( "Életkor", "mértékegység", "Testmagasság", "mértékegység",
-                                                                "Testtömeg", "mértékegység" ), height = 500,
-                                rowHeaders = 1:nrow( values$RawData ) ),
-                 stretchH = "all" )
+      hot_table( hot_col( rhandsontable( values$RawData, colHeaders = c( "Életkor", "mértékegység", "Testmagasság",
+                                                                         "mértékegység", "Testtömeg", "mértékegység" ),
+                                         height = 500, rowHeaders = 1:nrow( values$RawData ) ), c( 1, 3, 5 ), format = "0.0",
+                          language = "hu-HU" ), stretchH = "all" )
   } )
   
   observeEvent( input$addrow, {
