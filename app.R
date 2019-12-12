@@ -32,7 +32,15 @@ lmsplot <- lapply( lmsdat, function( l ) {
 ui <- fluidPage(
   theme = "owntheme.css",
   
-  tags$head( 
+  tags$head(
+    tags$script( async = NA, src = "https://www.googletagmanager.com/gtag/js?id=UA-19799395-3" ),
+    tags$script( HTML( "
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+                       
+    gtag('config', 'UA-19799395-3');
+    " ) ),
     tags$meta( name = "description", content = paste0( "Növekedési görbét a megadott adatok alapján kirajzoló és azt a ",
                                                        "referenciagörbékkel (percentilisgörbékkel) összevető alkalmazás. ",
                                                        "Írta: Ferenci Tamás." ) ),
@@ -58,13 +66,8 @@ ui <- fluidPage(
   ),
   
   tags$div( id="fb-root" ),
-  tags$script( HTML( "(function(d, s, id) {
-                    var js, fjs = d.getElementsByTagName(s)[0];
-                     if (d.getElementById(id)) return;
-                     js = d.createElement(s); js.id = id;
-                     js.src = 'https://connect.facebook.net/hu_HU/sdk.js#xfbml=1&version=v2.12';
-                     fjs.parentNode.insertBefore(js, fjs);
-                     }(document, 'script', 'facebook-jssdk'));" ) ),
+  tags$script( async = NA, defer = NA, crossorigin = "anonymous",
+               src = "https://connect.facebook.net/hu_HU/sdk.js#xfbml=1&version=v5.0" ),
   
   tags$style( ".shiny-file-input-progress {display: none}" ),
   
@@ -74,9 +77,9 @@ ui <- fluidPage(
      a( "itt", href = "https://github.com/tamas-ferenci/NovekedesiGorbeRajzolo",
         target = "_blank" ), "olvashatóak el." ),
   div( class="fb-like",
-       "data-href"="https://research.physcon.uni-obuda.hu/NovekedesiGorbeRajzolo/",
-       "data-layout"="standard", "data-action"="like", "data-size"="small",
-       "data-show-faces"="true", "data-share"="true"), p(),
+       "data-href"="https://research.physcon.uni-obuda.hu/NovekedesiGorbeRajzolo",
+       "data-width" = "", "data-layout"="standard", "data-action"="like", "data-size"="small",
+       "data-share"="true"), p(),
   
   sidebarLayout(
     sidebarPanel(
