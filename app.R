@@ -65,9 +65,9 @@ ui <- fluidPage(
     tags$meta( name = "DC.Language", content = "hu_HU" )
   ),
   
-  tags$div( id="fb-root" ),
-  tags$script( async = NA, defer = NA, crossorigin = "anonymous",
-               src = "https://connect.facebook.net/hu_HU/sdk.js#xfbml=1&version=v5.0" ),
+  tags$div(id = "fb-root"),
+  tags$script(async = NA, defer = NA, crossorigin = "anonymous",
+              src = "https://connect.facebook.net/hu_HU/sdk.js#xfbml=1&version=v16.0", nonce = "ZG8gLcyn"),
   
   tags$style( ".shiny-file-input-progress {display: none}" ),
   
@@ -75,11 +75,23 @@ ui <- fluidPage(
   
   p( "A program használatát részletesen bemutató súgó, valamint a technikai részletek",
      a( "itt", href = "https://github.com/tamas-ferenci/NovekedesiGorbeRajzolo",
-        target = "_blank" ), "olvashatóak el." ),
-  div( class="fb-like",
-       "data-href"="https://research.physcon.uni-obuda.hu/NovekedesiGorbeRajzolo",
-       "data-width" = "", "data-layout"="standard", "data-action"="like", "data-size"="small",
-       "data-share"="true"), p(),
+        target = "_blank" ), "olvashatóak el. Írta: ",
+     a("Ferenci Tamás", href = "http://www.medstat.hu/", target = "_blank",
+       .noWS = "outside"), "."),
+  div(style = "line-height: 13px;",
+      div(class = "fb-share-button",
+          "data-href" = "https://research.physcon.uni-obuda.hu/NovekedesiGorbeRajzolo/",
+          "data-layout" = "button_count", "data-size" = "small",
+          a("Megosztás", target = "_blank",
+            href = paste0("https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fresearch.physcon.",
+                          "uni-obuda.hu%2FNovekedesiGorbeRajzolo%2F&amp;src=sdkpreparse"),
+            class = "fb-xfbml-parse-ignore")),
+      
+      a("Tweet", href = "https://twitter.com/share?ref_src=twsrc%5Etfw", class = "twitter-share-button",
+        "data-show-count" = "true"),
+      includeScript("http://platform.twitter.com/widgets.js", async = NA, charset = "utf-8")),
+  
+  p(),
   
   sidebarLayout(
     sidebarPanel(
@@ -103,7 +115,7 @@ ui <- fluidPage(
                                                        language = "hu" ) ),
                           conditionalPanel( "input.fileformat==1",
                                             p( "A fájl beolvasása a 2. sortól kezdődik
-                                               (feltételezzük, hogy az első a fejléc)." ),
+     (feltételezzük, hogy az első a fejléc)." ),
                                             p( "A fájl a következő oszlopokat kell, hogy tartalmazza:" ),
                                             tags$ol( tags$li( "Életkor" ),
                                                      tags$li( "Életkor mértékegysége (hét vagy hónap vagy év)" ),
@@ -114,7 +126,7 @@ ui <- fluidPage(
                                                      type = "A" ) ),
                           conditionalPanel( "input.fileformat==2",
                                             p( "A fájl beolvasása a 2. sortól kezdődik
-                                               (feltételezzük, hogy az első a fejléc)." ),
+     (feltételezzük, hogy az első a fejléc)." ),
                                             p( "A fájl a következő oszlopokat kell, hogy tartalmazza:" ),
                                             tags$ol( tags$li( "Mérés időpontja (csv esetében ÉÉÉÉ-HH-NN formában)" ),
                                                      tags$li( "Testmagasság" ),
@@ -156,11 +168,11 @@ ui <- fluidPage(
     )
   ),
   
-  h4( "Írta: Ferenci Tamás (Óbudai Egyetem, Élettani Szabályozások Kutatóközpont), v2.05" ),
+  h4( "Írta: Ferenci Tamás (Óbudai Egyetem, Élettani Szabályozások Kutatóközpont), v2.06" ),
   
   tags$script( HTML( "var sc_project=11601191; 
-                      var sc_invisible=1; 
-                      var sc_security=\"5a06c22d\";
+     var sc_invisible=1; 
+     var sc_security=\"5a06c22d\";
                       var scJsHost = ((\"https:\" == document.location.protocol) ?
                       \"https://secure.\" : \"http://www.\");
                       document.write(\"<sc\"+\"ript type='text/javascript' src='\" +

@@ -124,3 +124,4 @@ v2.02|2018-02-26|<ul><li>Hibajavítás: a sorok számozása nem mindig folytonos
 v2.03|2018-02-27|Google Docs-ból történő importálás lehetőségének megteremtése.
 v2.04|2018-02-28|<ul><li>Hibajavítás: adatok betöltése után nem lehet rögtön, megjelenítés nélkül képfájlként lementeni a növekedési görbét.</li><li>Esztétikai javítások a felületen.</li></ul>
 v2.05|2018-03-07|<ul><li>Facebook megosztó gomb hozzáadása a felülethez.</li><li>Dokumentáció bővítése köszönetnyilvánítás ponttal.</li></ul>
+v2.06|2023-03-28|Fejléc javítása.
